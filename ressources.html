@@ -12,15 +12,17 @@
     .res-hero .small{color:#e5e7eb}
 
     .res-wrap{display:grid;gap:24px;align-items:start}
-    @media(min-width:980px){.res-wrap{grid-template-columns:280px 1fr}}
+    @media(min-width:1280px){.res-wrap{grid-template-columns:280px 1fr 420px}}
+    @media(min-width:980px) and (max-width:1279px){.res-wrap{grid-template-columns:260px 1fr}}
 
-    /* Sidebar */
     .toc{position:sticky;top:80px}
-    .toc .card{padding:14px}
+    .card{background:linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.03));border:1px solid rgba(148,163,184,.15);border-radius:16px;padding:14px}
     .toc a{display:block;color:#cbd5e1;padding:6px 8px;border-radius:10px}
     .toc a:hover,.toc a.active{background:rgba(148,163,184,.1);color:#fff}
 
-    /* Accordions */
+    .search{display:flex;gap:10px;align-items:center}
+    .search input{width:100%;padding:12px;border:1px solid rgba(148,163,184,.25);border-radius:12px;background:rgba(255,255,255,.03);color:#fff}
+
     .accordion{display:grid;gap:12px}
     .acc{border:1px solid rgba(148,163,184,.2);border-radius:16px;background:linear-gradient(180deg, rgba(255,255,255,.04), rgba(255,255,255,.02))}
     .acc-hd{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:14px 16px;cursor:pointer}
@@ -30,22 +32,34 @@
     .acc-bd{display:none;padding:0 14px 14px}
     .acc.open .acc-bd{display:block}
 
-    /* Sous-rubriques */
     .sub{border:1px dashed rgba(148,163,184,.25);border-radius:12px;padding:12px;margin:12px 0;background:rgba(255,255,255,.03)}
     .sub h4{margin:0 0 8px;font-size:16px;color:#e2e8f0;display:flex;align-items:center;gap:8px}
     .sub .items{display:grid;gap:10px}
-    .fiche{border:1px solid rgba(148,163,184,.22);border-radius:12px;padding:12px;background:rgba(255,255,255,.02)}
-    .fiche h5{margin:0 0 6px;font-size:15px;color:#fff;display:flex;align-items:center;gap:8px}
+
+    .fiche{border:1px solid rgba(148,163,184,.22);border-radius:12px;padding:12px;background:rgba(255,255,255,.02);display:grid;gap:6px}
+    .fiche h5{margin:0;font-size:15px;color:#fff;display:flex;align-items:center;gap:8px}
     .fiche .small{color:#94a3b8}
-    .fiche .ex{background:#0f172a;border:1px dashed rgba(148,163,184,.28);border-radius:10px;padding:10px;margin-top:8px}
-    .fiche details{margin-top:6px}
+    .fiche .actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:4px}
+    .btn-mini{display:inline-flex;align-items:center;gap:8px;padding:8px 10px;border-radius:10px;font-weight:700;border:1px solid rgba(148,163,184,.25);background:rgba(255,255,255,.03);color:#e2e8f0;cursor:pointer}
+    .btn-mini:hover{filter:brightness(1.06)}
     .badge-k{display:inline-block;margin-left:8px;padding:3px 8px;border:1px solid rgba(148,163,184,.25);border-radius:999px;font-size:12px;color:#cbd5e1}
 
-    /* Recherche */
-    .search{display:flex;gap:10px;align-items:center}
-    .search input{width:100%;padding:12px;border:1px solid rgba(148,163,184,.25);border-radius:12px;background:rgba(255,255,255,.03);color:#fff}
-    .hit{outline:2px solid rgba(91,156,255,.4);outline-offset:2px;border-radius:14px}
-    .ico{font-size:18px}
+    .viewer-col{display:none}
+    @media(min-width:1280px){.viewer-col{display:block; position:sticky; top:80px}}
+    .viewer{background:linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.03));border:1px solid rgba(148,163,184,.15);border-radius:16px;box-shadow:0 8px 24px rgba(0,0,0,.22);padding:16px;height:max(60vh, 480px);overflow:auto}
+    .viewer h4{margin:4px 0 8px}
+    .viewer .meta{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:8px}
+    .viewer .meta .chip{font-size:12px;border:1px solid rgba(148,163,184,.25);border-radius:999px;padding:4px 8px;color:#cbd5e1}
+    .viewer .ex{background:#0f172a;border:1px dashed rgba(148,163,184,.28);border-radius:10px;padding:10px;margin-top:8px}
+    .viewer-empty{color:#94a3b8}
+
+    .drawer{position:fixed;inset:0;display:none}
+    .drawer.open{display:block}
+    .drawer .backdrop{position:absolute;inset:0;background:rgba(0,0,0,.45)}
+    .drawer .panel{position:absolute;inset:auto 0 0 0;background:#0f172a;border-top:1px solid rgba(148,163,184,.2);border-radius:18px 18px 0 0;max-height:85vh;overflow:auto;box-shadow:0 -8px 24px rgba(0,0,0,.35);padding:14px}
+    .drawer .close{position:sticky;top:0;display:flex;justify-content:flex-end}
+    .drawer .close button{margin:-6px -6px 6px 0}
+    .focus-ring:focus{outline:2px solid rgba(91,156,255,.6);outline-offset:2px;border-radius:10px}
   </style>
 </head>
 <body>
@@ -61,7 +75,6 @@
       <a href="apropos.html">À propos</a>
       <a href="cours.html">Cours</a>
       <a class="active" href="ressources.html">Ressources</a>
-      <a href="test-niveau.html">Test de niveau</a>
       <a href="contact.html">Contact</a>
       <a class="btn btn-primary" href="contact.html#inscription">S’inscrire</a>
     </div>
@@ -71,12 +84,11 @@
 <main class="res-hero">
   <div class="container">
     <h2>Ressources de cours</h2>
-    <p class="small">Parcourez les grandes thématiques et ouvrez les sous-rubriques. Chaque fiche contient explications, exemples et mini-exercices corrigés.</p>
+    <p class="small">Parcourez les thèmes, puis ouvrez chaque fiche dans le <strong>volet de lecture</strong> (droite) ou en <strong>slide-over</strong> sur mobile.</p>
   </div>
 </main>
 
 <section class="container res-wrap">
-  <!-- Sidebar TOC -->
   <aside class="toc">
     <div class="card">
       <strong>Sommaire</strong>
@@ -86,15 +98,28 @@
       <div class="search">
         <input id="search" type="search" placeholder="Rechercher (ex : imparfait, adjectifs, pays…)">
       </div>
-      <div class="small" style="margin-top:6px;color:#94a3b8">Tapez un mot-clé pour filtrer sections et fiches.</div>
+      <div class="small" style="margin-top:6px;color:#94a3b8">Filtre les sections et fiches. Appuie sur Entrée pour valider.</div>
     </div>
   </aside>
 
-  <!-- Accordions -->
   <div>
     <div id="acc-container" class="accordion"></div>
   </div>
+
+  <aside class="viewer-col">
+    <div class="viewer" id="viewer">
+      <div class="viewer-empty">Sélectionnez une fiche dans la liste à gauche.</div>
+    </div>
+  </aside>
 </section>
+
+<div class="drawer" id="drawer" aria-hidden="true">
+  <div class="backdrop" data-dismiss></div>
+  <div class="panel">
+    <div class="close"><button class="btn-mini" data-dismiss>Fermer ✖</button></div>
+    <div id="drawer-content"></div>
+  </div>
+</div>
 
 <footer>
   <div class="container footer-inner">
@@ -102,9 +127,8 @@
   </div>
 </footer>
 
-<script src="assets/script.js" defer></script>
 <script>
-  // ---------- Pictos (emoji simples, lisibles partout) ----------
+  // Icônes
   const I = {
     grammaire:'📘', temps:'⏱️', present:'🟢', passe:'🕰️', futur:'⏭️', conditionnel:'🤝', irreg:'🧩',
     verbes:'🔤', conjugueur:'🧮', noms:'🏷️', articles:'📰', pronoms:'👥', adjectifs:'🎨', adverbes:'🏃', preps:'🧭', phrase:'🧱',
@@ -112,8 +136,7 @@
     comprehension:'👂📖', ecrite:'📄', orale:'🎧', ecriture:'✍️', ponctuation:'✴️', figures:'✨', pov:'👁️', registres:'🎭', image:'🖼️'
   };
 
-  // ---------- Données de contenu : sections > groupes > sous-rubriques (items) > fiches ----------
-  // Chaque fiche : { title, html }  (html = contenu riche + exercices)
+  // ===================== DONNÉES COMPLÈTES (fiches) =====================
   const DATA = [
     {
       id:'grammaire', title:`${I.grammaire} Grammaire`,
@@ -121,7 +144,7 @@
         { title:`${I.temps} Temps de l’indicatif`, items:[
           { title:`${I.present} Présent`, fiches:[
               { title:'Valeurs & formation',
-                html:`<p>Le <strong>présent de l’indicatif</strong> exprime une action en cours, une vérité générale ou un futur proche. <em>Je travaille, Il pleut, On part demain.</em></p>
+                html:`<p>Le <strong>présent de l’indicatif</strong> exprime une action en cours, une vérité générale ou un futur proche.</p>
                       <ul class="small"><li><strong>-ER</strong> : parler → je parle, tu parles, il parle, nous parlons, vous parlez, ils parlent</li>
                       <li><strong>-IR</strong> : finir → je finis, ... nous finissons, vous finissez, ils finissent</li>
                       <li><strong>-RE</strong> : vendre → je vends, tu vends, il vend, nous vendons, vous vendez, ils vendent</li></ul>
@@ -175,7 +198,7 @@
         { title:`${I.verbes} Verbes`, items:[
           { title:`${I.conjugueur} Conjugueur`, fiches:[
               { title:'Chercher un verbe',
-                html:`<p class="small">Astuce : tapez « verbe + conjugaison » dans la recherche du site (à venir).</p>`}
+                html:`<p class="small">Astuce : tapez « verbe + conjugaison » dans la recherche du site (module interne à venir).</p>`}
           ]}
         ]},
         { title:`${I.noms} Noms & groupes nominaux`, items:[
@@ -201,7 +224,7 @@
           ]},
           { title:`${I.preps} Prépositions`, fiches:[
               { title:'À / De / En / Dans',
-                html:`<p><strong>En</strong> + pays fém. / voyelle ; <strong>au</strong> + pays masc. ; <strong>aux</strong> + pluriel. <em>En France</em>, <em>au Brésil</em>, <em>aux États-Unis</em>.</p>`}
+                html:`<p><strong>En</strong> + pays fém./voyelle ; <strong>au</strong> + pays masc. ; <strong>aux</strong> + pluriel. <em>En France</em>, <em>au Brésil</em>, <em>aux États-Unis</em>.</p>`}
           ]},
           { title:`${I.phrase} Structure de la phrase`, fiches:[
               { title:'SVO / négation / interrogation',
@@ -320,51 +343,59 @@
       ]
     }
   ];
+  // ===================== FIN DES DONNÉES =====================
 
-  // ---------- Rendu ----------
-  const accRoot = document.getElementById('acc-container');
-  const tocRoot = document.getElementById('toc-links');
-  const search = document.getElementById('search');
+  const accRoot   = document.getElementById('acc-container');
+  const tocRoot   = document.getElementById('toc-links');
+  const searchEl  = document.getElementById('search');
+  const viewerCol = document.querySelector('.viewer-col');
+  const viewer    = document.getElementById('viewer');
+  const drawer    = document.getElementById('drawer');
+  const drawerCt  = document.getElementById('drawer-content');
 
   tocRoot.innerHTML = DATA.map(s=>`<a href="#${s.id}" data-id="${s.id}">${s.title}</a>`).join('');
 
-  function renderAccordions(filter=''){
-    const q = filter.trim().toLowerCase();
-    accRoot.innerHTML = DATA.map(section=>{
-      // groupes → items → fiches (contenu)
-      const htmlGroups = section.groups.map(g=>{
-        const items = g.items.map(it=>{
-          // Filtrage simple
+  function render(filter=''){
+    const q = (filter||'').trim().toLowerCase();
+    accRoot.innerHTML = DATA.map((section, sIdx)=>{
+      const groupsHTML = (section.groups||[]).map((g, gIdx)=>{
+        const itemsHTML = (g.items||[]).map((it, iIdx)=>{
           const fiches = (it.fiches||[])
-            .filter(f => !q || f.title.toLowerCase().includes(q) || (f.html && f.html.toLowerCase().includes(q)))
-            .map(f=>`<div class="fiche">
+            .filter(f => !q || f.title.toLowerCase().includes(q) || (f.html && f.html.toLowerCase().includes(q)) || it.title.toLowerCase().includes(q))
+            .map((f, fIdx)=>{
+              const fid = encodeURIComponent(`${sIdx}|${gIdx}|${iIdx}|${fIdx}`);
+              return `<div class="fiche">
                         <h5><span class="ico">📄</span>${f.title}</h5>
-                        <div>${f.html}</div>
-                      </div>`).join('');
+                        <div class="small">${it.title} — ${g.title}</div>
+                        <div class="actions">
+                          <button class="btn-mini focus-ring" data-open="${fid}" aria-label="Ouvrir ${f.title}">Ouvrir dans le volet →</button>
+                          <a class="btn-mini focus-ring" href="#view=${fid}" aria-label="Lien direct">Lien direct 🔗</a>
+                        </div>
+                      </div>`;
+            }).join('');
           if (!fiches) return '';
           return `<div class="sub">
                     <h4><span class="ico">📚</span>${it.title}</h4>
                     <div class="items">${fiches}</div>
                   </div>`;
         }).join('');
-        if (!items.replace(/\s/g,'').length) return '';
-        return `<div class="card" style="padding:12px">${items}</div>`;
+        if (!itemsHTML.trim()) return '';
+        return `<div class="card" style="padding:12px">${itemsHTML}</div>`;
       }).join('');
-
-      if (!htmlGroups.replace(/\s/g,'').length) return '';
-      return `
-        <div class="acc" id="${section.id}">
-          <div class="acc-hd" role="button" aria-expanded="false">
-            <h3>${section.title}</h3>
-            <span class="badge-k">${section.groups.length} groupes</span>
-            <span class="chev">▶</span>
-          </div>
-          <div class="acc-bd">${htmlGroups}</div>
-        </div>`;
+      if (!groupsHTML.trim()) return '';
+      return `<div class="acc" id="${section.id}">
+        <div class="acc-hd" role="button" aria-expanded="false">
+          <h3>${section.title}</h3>
+          <span class="badge-k">${(section.groups||[]).length} groupes</span>
+          <span class="chev">▶</span>
+        </div>
+        <div class="acc-bd">${groupsHTML}</div>
+      </div>`;
     }).join('');
 
     attachAccHandlers();
-    restoreStateFromHash();
+    attachOpenHandlers();
+    restoreHash();
   }
 
   function attachAccHandlers(){
@@ -374,7 +405,6 @@
         acc.classList.toggle('open');
         const open = acc.classList.contains('open');
         hd.setAttribute('aria-expanded', open?'true':'false');
-        // persist
         const key='acc-open';
         const set = new Set(JSON.parse(localStorage.getItem(key) || '[]'));
         open ? set.add(acc.id) : set.delete(acc.id);
@@ -383,8 +413,7 @@
       });
     });
   }
-
-  function restoreOpenFromStorage(){
+  function restoreAccOpen(){
     const key='acc-open';
     const open = new Set(JSON.parse(localStorage.getItem(key) || '[]'));
     open.forEach(id=>{
@@ -393,23 +422,64 @@
     });
   }
 
-  function restoreStateFromHash(){
-    const id = decodeURIComponent(location.hash.replace('#',''));
-    if(!id) return;
-    const el = document.getElementById(id);
-    if(el){
-      el.classList.add('open');
-      el.querySelector('.acc-hd')?.setAttribute('aria-expanded','true');
-      setTimeout(()=>{ el.scrollIntoView({behavior:'smooth', block:'start'}); }, 50);
-    }
+  function attachOpenHandlers(){
+    accRoot.querySelectorAll('[data-open]').forEach(btn=>{
+      btn.addEventListener('click', ()=>{
+        const fid = btn.getAttribute('data-open');
+        openFicheById(fid, true);
+      });
+    });
   }
 
-  // Recherche
-  search.addEventListener('input', (e)=>{
-    const q = e.target.value;
-    renderAccordions(q);
-    highlight(q);
-  });
+  function parseFid(fid){
+    const [s,g,i,f] = decodeURIComponent(fid).split('|').map(n=>parseInt(n,10));
+    const section = DATA[s]; if(!section) return null;
+    const group   = section.groups?.[g]; if(!group) return null;
+    const item    = group.items?.[i]; if(!item) return null;
+    const fiche   = item.fiches?.[f]; if(!fiche) return null;
+    return {section, group, item, fiche, indexes:{s,g,i,f}};
+  }
+
+  function renderFicheHTML({section, group, item, fiche}){
+    return `<div class="meta">
+              <span class="chip">${section.title}</span>
+              <span class="chip">${group.title}</span>
+              <span class="chip">${item.title}</span>
+            </div>
+            <h4>${fiche.title}</h4>
+            <div>${fiche.html}</div>`;
+  }
+
+  function openFicheById(fid, pushHash=false){
+    const p = parseFid(fid);
+    if(!p) return;
+    const html = renderFicheHTML(p);
+    if (window.matchMedia('(min-width: 1280px)').matches) {
+      document.querySelector('.viewer-col').style.display = 'block';
+      viewer.innerHTML = html; viewer.scrollTop = 0;
+    } else {
+      drawerCt.innerHTML = html;
+      drawer.classList.add('open'); drawer.setAttribute('aria-hidden','false');
+    }
+    if (pushHash) location.hash = `view=${encodeURIComponent(fid)}`;
+  }
+
+  function restoreHash(){
+    const h = location.hash.replace('#','');
+    if(!h) return;
+    if(h.startsWith('view=')){
+      openFicheById(h.slice(5), false);
+    } else {
+      const el = document.getElementById(decodeURIComponent(h));
+      if(el){
+        el.classList.add('open');
+        el.querySelector('.acc-hd')?.setAttribute('aria-expanded','true');
+        setTimeout(()=>el.scrollIntoView({behavior:'smooth', block:'start'}), 50);
+      }
+    }
+    syncTOC();
+  }
+  window.addEventListener('hashchange', restoreHash);
 
   function highlight(q){
     accRoot.querySelectorAll('.hit').forEach(el=>el.classList.remove('hit'));
@@ -423,22 +493,22 @@
       }
     });
   }
+  searchEl.addEventListener('input', e=>{ render(e.target.value); highlight(e.target.value); });
+  searchEl.addEventListener('keydown', e=>{ if(e.key==='Enter'){ e.preventDefault(); highlight(searchEl.value||''); }});
 
-  // Init
-  renderAccordions('');
-  restoreOpenFromStorage();
-
-  // TOC actif
   function syncTOC(){
     const hash = location.hash.replace('#','');
     tocRoot.querySelectorAll('a').forEach(a=>{
       a.classList.toggle('active', a.getAttribute('data-id')===hash);
     });
   }
-  window.addEventListener('hashchange', syncTOC);
-  syncTOC();
+
+  drawer.addEventListener('click', (e)=>{ if(e.target.hasAttribute('data-dismiss')){ drawer.classList.remove('open'); drawer.setAttribute('aria-hidden','true'); } });
+  window.addEventListener('keydown', (e)=>{ if(e.key==='Escape'){ drawer.classList.remove('open'); drawer.setAttribute('aria-hidden','true'); } });
 
   document.getElementById('year').textContent = new Date().getFullYear();
+  render(''); restoreAccOpen(); syncTOC();
 </script>
+<script src="assets/script.js" defer></script>
 </body>
 </html>
