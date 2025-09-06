@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Test de niveau — Cours de Français</title>
+  <link rel="stylesheet" href="assets/styles.css">
+  <style>
+    .quiz-hero{padding:36px 0;border-bottom:1px solid rgba(148,163,184,.12);
+      background:linear-gradient(90deg, rgba(91,156,255,.18), rgba(168,85,247,.18))}
+    .quiz-hero h2{margin:0;color:#fff}
+    .quiz-hero .small{color:#e5e7eb}
+    .quiz-wrap{max-width:950px;margin:0 auto}
+    .step-indicator{display:flex;gap:8px;flex-wrap:wrap;margin:12px 0 18px}
+    .step-pill{padding:6px 10px;border-radius:999px;border:1px solid rgba(148,163,184,.28);
+      background:rgba(255,255,255,.03);color:#e5e7eb;font-size:14px}
+    .step-pill.active{background:rgba(91,156,255,.18);border-color:rgba(91,156,255,.35);color:#fff}
+    .quiz-section{margin-bottom:20px}
+    .q{margin:12px 0}
+    .q-text{margin-bottom:8px}
+    .q-opts{display:grid;gap:8px}
+    .opt{display:flex;align-items:center;gap:10px;padding:10px;border:1px solid rgba(148,163,184,.18);
+      border-radius:12px;background:rgba(255,255,255,.03)}
+    .opt input{accent-color:#5b9cff;transform:scale(1.1)}
+    .nav-actions{display:flex;gap:10px;flex-wrap:wrap;justify-content:space-between;margin-top:16px}
+    .res-card .big{font-size:20px;margin-bottom:10px}
+    .res-card .lvl{display:inline-block;margin:6px 0;padding:6px 10px;border-radius:999px;
+      background:rgba(91,156,255,.18);border:1px solid rgba(91,156,255,.3)}
+
+    /* Dashboard résultats */
+    .dash{display:grid;gap:18px}
+    @media(min-width:900px){.dash{grid-template-columns:340px 1fr}}
+    .donut{display:flex;align-items:center;justify-content:center}
+    .donut svg{width:240px;height:240px}
+    .donut .label{position:absolute;text-align:center;font-weight:800;color:#fff}
+    .donut-wrap{position:relative;display:inline-block}
+    .bars{display:grid;gap:10px}
+    .bar{background:rgba(148,163,184,.18);border-radius:999px;overflow:hidden}
+    .bar>span{display:block;height:14px;background:linear-gradient(90deg,#5b9cff,#a855f7)}
+    .errors{display:none;margin-top:14px}
+    .errors.show{display:block}
+    .err{border-left:3px solid #ef4444;background:rgba(239,68,68,.08);border-radius:10px;padding:10px}
+    .err+.err{margin-top:8px}
+    .ok{border-left:3px solid #22c55e;background:rgba(34,197,94,.08);border-radius:10px;padding:10px}
+  </style>
+</head>
+<body>
+<header>
+  <nav class="container">
+    <div class="brand">
+      <svg class="flag" viewBox="0 0 3 2" aria-hidden="true">
+        <rect width="1" height="2" x="0" fill="#002395"/>
+        <rect width="1" height="2" x="1" fill="#ffffff"/>
+        <rect width="1" height="2" x="2" fill="#ED2939"/>
+      </svg>
+      <h1>Cours de Français — Domingas Silva</h1>
+    </div>
+    <button class="burger" aria-label="Ouvrir le menu" aria-expanded="false" aria-controls="navlinks">☰</button>
+    <div class="navlinks" id="navlinks">
+      <a href="index.html">Accueil</a>
+      <a href="apropos.html">À propos</a>
+      <a href="cours.html">Cours</a>
+      <a href="ressources.html">Ressources</a>
+      <a class="active" href="test-niveau.html">Test de niveau</a>
+      <a href="contact.html">Contact</a>
+      <a class="btn btn-primary" href="contact.html#inscription">S’inscrire</a>
+    </div>
+  </nav>
+</header>
+
+<main class="quiz-hero">
+  <div class="container quiz-wrap">
+    <h2>Test de niveau (A1 → C2)</h2>
+    <p class="small">Étapes : vocabulaire → grammaire → conjugaison → <strong>résultats</strong>. Répondez, cliquez sur <strong>Suivant</strong>, puis sur <strong>Terminer</strong>.</p>
+  </div>
+</main>
+
+<section class="container quiz-wrap">
+  <div id="steps" class="step-indicator"></div>
+
+  <form id="quiz-form">
+    <div id="section"></div>
+
+    <div class="nav-actions">
+      <button class="btn btn-outline" type="button" id="prev">← Précédent</button>
+      <div style="display:flex;gap:10px">
+        <button class="btn btn-outline" type="button" id="next">Suivant →</button>
+        <button class="btn btn-primary" type="submit" id="finish">Terminer</button>
+      </div>
+    </div>
+  </form>
+</section>
+
+<footer>
+  <div class="container footer-inner">
+    <div class="small">© <span id="year"></span> Domingas Silva — Test indicatif. Un entretien oral permet d’affiner le niveau.</div>
+  </div>
+</footer>
+
+<script src="assets/quiz.js"></script>
+<script src="assets/script.js" defer></script>
+<script>document.getElementById('year').textContent=new Date().getFullYear();</script>
+</body>
+</html>
