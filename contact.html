@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Contact — Cours de Français</title>
+  <meta name="description" content="">
+  <link rel="stylesheet" href="assets/styles.css">
+</head>
+<body>
+<header>
+  <nav class="container">
+    <div class="brand">
+      <svg class="flag" viewBox="0 0 3 2" aria-hidden="true"><rect width="1" height="2" x="0" fill="#002395"/><rect width="1" height="2" x="1" fill="#ffffff"/><rect width="1" height="2" x="2" fill="#ED2939"/></svg>
+      <h1>Cours de Français — Domingas Silva</h1>
+    </div>
+    <button class="burger" aria-label="Ouvrir le menu" aria-expanded="false" aria-controls="navlinks">☰</button>
+    <div class="navlinks" id="navlinks">
+      <a class="" href="index.html">Accueil</a>
+      <a class="" href="apropos.html">À propos</a>
+      <a class="" href="cours.html">Cours</a>
+      <a class="" href="ressources.html">Ressources</a>
+      <a class="active" href="contact.html">Contact</a>
+      <a class="btn btn-primary" href="contact.html#inscription">S’inscrire</a>
+    </div>
+  </nav>
+</header>
+
+<section class="container footer-grid">
+  <div>
+    <h3>Contact</h3>
+    <p><strong>Téléphone</strong> : <a href="tel:+557599950452">+55 75 9995‑0452</a><br>
+       <strong>Email</strong> : <a href="mailto:domingas@aluno.ufrb.edu.br">domingas@aluno.ufrb.edu.br</a><br>
+       <strong>Lieu</strong> : UFRB — Cruz das Almas, Brésil</p>
+    <p class="small">Suivez aussi : <a href="https://www.linkedin.com/" target="_blank" rel="noopener">LinkedIn</a> · <a href="https://www.instagram.com/" target="_blank" rel="noopener">Instagram</a></p>
+  </div>
+  <div class="card" id="inscription">
+    <h3 style="margin-top:0">Formulaire de contact</h3>
+    <form onsubmit="return handleSubmit(event)">
+      <label>Nom<br><input required name="name" class="input"></label>
+      <label>Email<br><input type="email" required name="email" class="input"></label>
+      <label>Message<br><textarea required name="message" rows="4" class="input"></textarea></label>
+      <button class="btn btn-primary" type="submit">Envoyer</button>
+    </form>
+    <p class="small">Aucun serveur requis : l’envoi ouvrira votre client mail.</p>
+  </div>
+</section>
+<section class="cta"><div class="container inner"><div><h3 style="margin:6px 0;color:#fff">Prêt·e à commencer ?</h3><div class="small">Réservez une place ou demandez un essai gratuit de 15 min.</div></div>
+<div><a class="btn btn-primary" href="https://wa.me/557599950452" target="_blank" rel="noopener">WhatsApp</a> <a class="btn btn-outline" href="mailto:domingas@aluno.ufrb.edu.br">E‑mail</a></div></div></section>
+
+<footer>
+  <div class="container footer-inner">
+    <div class="small">© <span id="year"></span> Domingas Silva — Cours de Français · Design modernisé.</div>
+  </div>
+</footer>
+<script src="assets/script.js" defer></script>
+</body>
+</html>
