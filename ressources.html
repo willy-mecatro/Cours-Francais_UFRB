@@ -4,8 +4,49 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Ressources — Cours de Français</title>
-  <meta name="description" content="">
   <link rel="stylesheet" href="assets/styles.css">
+  <style>
+    .res-hero{padding:36px 0;border-bottom:1px solid rgba(148,163,184,.12);
+      background:linear-gradient(90deg, rgba(91,156,255,.18), rgba(168,85,247,.18))}
+    .res-hero h2{margin:0;color:#fff}
+    .res-hero .small{color:#e5e7eb}
+
+    .res-wrap{display:grid;gap:24px;align-items:start}
+    @media(min-width:980px){.res-wrap{grid-template-columns:280px 1fr}}
+
+    /* Sidebar */
+    .toc{position:sticky;top:80px}
+    .toc .card{padding:14px}
+    .toc a{display:block;color:#cbd5e1;padding:6px 8px;border-radius:10px}
+    .toc a:hover,.toc a.active{background:rgba(148,163,184,.1);color:#fff}
+
+    /* Accordions */
+    .accordion{display:grid;gap:12px}
+    .acc{border:1px solid rgba(148,163,184,.2);border-radius:16px;background:linear-gradient(180deg, rgba(255,255,255,.04), rgba(255,255,255,.02))}
+    .acc-hd{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:14px 16px;cursor:pointer}
+    .acc-hd h3{margin:0;font-size:18px;color:#fff;display:flex;align-items:center;gap:10px}
+    .acc-hd .chev{transition:transform .2s ease}
+    .acc.open .acc-hd .chev{transform:rotate(90deg)}
+    .acc-bd{display:none;padding:0 14px 14px}
+    .acc.open .acc-bd{display:block}
+
+    /* Sous-rubriques */
+    .sub{border:1px dashed rgba(148,163,184,.25);border-radius:12px;padding:12px;margin:12px 0;background:rgba(255,255,255,.03)}
+    .sub h4{margin:0 0 8px;font-size:16px;color:#e2e8f0;display:flex;align-items:center;gap:8px}
+    .sub .items{display:grid;gap:10px}
+    .fiche{border:1px solid rgba(148,163,184,.22);border-radius:12px;padding:12px;background:rgba(255,255,255,.02)}
+    .fiche h5{margin:0 0 6px;font-size:15px;color:#fff;display:flex;align-items:center;gap:8px}
+    .fiche .small{color:#94a3b8}
+    .fiche .ex{background:#0f172a;border:1px dashed rgba(148,163,184,.28);border-radius:10px;padding:10px;margin-top:8px}
+    .fiche details{margin-top:6px}
+    .badge-k{display:inline-block;margin-left:8px;padding:3px 8px;border:1px solid rgba(148,163,184,.25);border-radius:999px;font-size:12px;color:#cbd5e1}
+
+    /* Recherche */
+    .search{display:flex;gap:10px;align-items:center}
+    .search input{width:100%;padding:12px;border:1px solid rgba(148,163,184,.25);border-radius:12px;background:rgba(255,255,255,.03);color:#fff}
+    .hit{outline:2px solid rgba(91,156,255,.4);outline-offset:2px;border-radius:14px}
+    .ico{font-size:18px}
+  </style>
 </head>
 <body>
 <header>
@@ -16,37 +57,388 @@
     </div>
     <button class="burger" aria-label="Ouvrir le menu" aria-expanded="false" aria-controls="navlinks">☰</button>
     <div class="navlinks" id="navlinks">
-      <a class="" href="index.html">Accueil</a>
-      <a class="" href="apropos.html">À propos</a>
-      <a class="" href="cours.html">Cours</a>
+      <a href="index.html">Accueil</a>
+      <a href="apropos.html">À propos</a>
+      <a href="cours.html">Cours</a>
       <a class="active" href="ressources.html">Ressources</a>
-      <a class="" href="test-niveau.html">Test de niveau</a>
-      <a class="" href="contact.html">Contact</a>
+      <a href="test-niveau.html">Test de niveau</a>
+      <a href="contact.html">Contact</a>
       <a class="btn btn-primary" href="contact.html#inscription">S’inscrire</a>
     </div>
   </nav>
 </header>
 
-<section class="container">
-  <h3>Ressources · Leçons & Exercices</h3>
-  <p class="small">Contenu original adapté aux besoins de vos apprenants.</p>
-  <details open><summary>Leçon 1 — Saluer & se présenter (A1)</summary>
-    <div class="lesson"><p><strong>Objectif</strong> : se saluer, se présenter, demander le prénom/la nationalité.</p>
-    <ul><li>Salut ! / Bonjour ! / Bonsoir !</li><li>Je m’appelle <em>Domingas</em>. Et toi ?</li><li>Je suis brésilien·ne. Et toi, tu es français·e ?</li></ul>
-    <div class="ex"><strong>Exercice :</strong>
-      <label>1) Bonjour, je m’____ Domingas.</label>
-      <label>2) Tu es _______ (du Brésil) ?</label>
-      <button class="btn btn-outline" onclick="toggleSol(this)">Voir la correction</button>
-      <div class="sol">1) appelle · 2) brésilien/ne</div>
-    </div></div>
-  </details>
+<main class="res-hero">
+  <div class="container">
+    <h2>Ressources de cours</h2>
+    <p class="small">Parcourez les grandes thématiques et ouvrez les sous-rubriques. Chaque fiche contient explications, exemples et mini-exercices corrigés.</p>
+  </div>
+</main>
+
+<section class="container res-wrap">
+  <!-- Sidebar TOC -->
+  <aside class="toc">
+    <div class="card">
+      <strong>Sommaire</strong>
+      <div id="toc-links" style="margin-top:10px"></div>
+    </div>
+    <div class="card" style="margin-top:12px">
+      <div class="search">
+        <input id="search" type="search" placeholder="Rechercher (ex : imparfait, adjectifs, pays…)">
+      </div>
+      <div class="small" style="margin-top:6px;color:#94a3b8">Tapez un mot-clé pour filtrer sections et fiches.</div>
+    </div>
+  </aside>
+
+  <!-- Accordions -->
+  <div>
+    <div id="acc-container" class="accordion"></div>
+  </div>
 </section>
 
 <footer>
   <div class="container footer-inner">
-    <div class="small">© <span id="year"></span> Domingas Silva — Cours de Français · Design modernisé.</div>
+    <div class="small">© <span id="year"></span> Domingas Silva — Ressources pédagogiques.</div>
   </div>
 </footer>
+
 <script src="assets/script.js" defer></script>
+<script>
+  // ---------- Pictos (emoji simples, lisibles partout) ----------
+  const I = {
+    grammaire:'📘', temps:'⏱️', present:'🟢', passe:'🕰️', futur:'⏭️', conditionnel:'🤝', irreg:'🧩',
+    verbes:'🔤', conjugueur:'🧮', noms:'🏷️', articles:'📰', pronoms:'👥', adjectifs:'🎨', adverbes:'🏃', preps:'🧭', phrase:'🧱',
+    vocab:'🗂️', confondre:'⚠️', conj:'🔗', nombres:'🔢', pays:'🌍', expressions:'💬', thematique:'🧩', calendrier:'🗓️',
+    comprehension:'👂📖', ecrite:'📄', orale:'🎧', ecriture:'✍️', ponctuation:'✴️', figures:'✨', pov:'👁️', registres:'🎭', image:'🖼️'
+  };
+
+  // ---------- Données de contenu : sections > groupes > sous-rubriques (items) > fiches ----------
+  // Chaque fiche : { title, html }  (html = contenu riche + exercices)
+  const DATA = [
+    {
+      id:'grammaire', title:`${I.grammaire} Grammaire`,
+      groups: [
+        { title:`${I.temps} Temps de l’indicatif`, items:[
+          { title:`${I.present} Présent`, fiches:[
+              { title:'Valeurs & formation',
+                html:`<p>Le <strong>présent de l’indicatif</strong> exprime une action en cours, une vérité générale ou un futur proche. <em>Je travaille, Il pleut, On part demain.</em></p>
+                      <ul class="small"><li><strong>-ER</strong> : parler → je parle, tu parles, il parle, nous parlons, vous parlez, ils parlent</li>
+                      <li><strong>-IR</strong> : finir → je finis, ... nous finissons, vous finissez, ils finissent</li>
+                      <li><strong>-RE</strong> : vendre → je vends, tu vends, il vend, nous vendons, vous vendez, ils vendent</li></ul>
+                      <div class="ex"><strong>Exercice</strong> : Conjuguez au présent : « nous (visiter) », « ils (choisir) ».
+                        <details><summary>Correction</summary><div>nous visitons ; ils choisissent</div></details></div>`},
+              { title:'Présent vs futur proche',
+                html:`<p>Le <em>futur proche</em> : <strong>aller + infinitif</strong> (<em>je vais partir</em>) pour un futur imminent, planifié.</p>
+                      <div class="ex"><strong>Exercice</strong> : Transformez au futur proche : « Je dîne. » → …
+                        <details><summary>Correction</summary><div>Je <strong>vais dîner</strong>.</div></details></div>`}
+          ]},
+          { title:`${I.passe} Passé composé`, fiches:[
+              { title:'Formation AVOIR/ÊTRE + participe',
+                html:`<p>Le <strong>passé composé</strong> = <em>auxiliaire (avoir/être) au présent</em> + <em>participe passé</em>.</p>
+                      <ul class="small"><li>Avec <strong>être</strong> (aller, venir, naître, mourir, monter…) : accord avec le sujet. <em>Elle est allée</em>.</li>
+                      <li>Avec <strong>avoir</strong> : accord avec COD <em>placé avant</em>. <em>Les fleurs qu’elle a achet<span style="text-decoration:underline">ées</span></em>.</li></ul>
+                      <div class="ex"><strong>Exercice</strong> : « Elles (arriver) » ; « Il a (manger) les pommes. »
+                        <details><summary>Correction</summary><div>Elles <strong>sont arrivées</strong> ; Il <strong>a mangé</strong> les pommes.</div></details></div>`},
+              { title:'Valeurs & emploi',
+                html:`<p>Action terminée, datée, avancée du récit : <em>Hier, j’ai fini le dossier.</em></p>`}
+          ]},
+          { title:`${I.passe} Imparfait / Passé composé`, fiches:[
+              { title:'Contraste narratif',
+                html:`<p><strong>Imparfait</strong> = décor, habitude, description ; <strong>Passé composé</strong> = actions qui font avancer l’histoire.</p>
+                      <div class="ex"><strong>Choix</strong> : « Je (lire) quand il (sonner). »
+                        <details><summary>Correction</summary><div>Je <strong>lisais</strong> quand il <strong>a sonné</strong>.</div></details></div>`}
+          ]},
+          { title:`${I.futur} Futur simple & antérieur`, fiches:[
+              { title:'Terminaisons & orthographe',
+                html:`<p>Futur simple : <em>parlerai, finiras, ira</em>. Attention aux bases : <em>voir → je verrai</em>.</p>
+                      <div class="ex"><strong>Exercice</strong> : Futur de « nous (pouvoir) » ; « elle (voir) ».
+                        <details><summary>Correction</summary><div>nous <strong>pourrons</strong> ; elle <strong>verra</strong>.</div></details></div>`},
+              { title:'Futur antérieur (valeurs)',
+                html:`<p>Action <em>achevée dans le futur</em> avant une autre : « Quand tu arriveras, j’<strong>aurai fini</strong>. »</p>`}
+          ]},
+          { title:`${I.conditionnel} Conditionnel`, fiches:[
+              { title:'Politesse & hypothèse',
+                html:`<p><strong>Conditionnel présent</strong> : <em>je voudrais, nous aimerions</em>. Sert à la politesse et aux hypothèses.</p>
+                      <div class="ex"><strong>Complétez</strong> : « Je (aimer) un café, s’il vous plaît. »
+                        <details><summary>Correction</summary><div>Je <strong>voudrais</strong> un café.</div></details></div>`}
+          ]},
+          { title:`${I.irreg} Verbes irréguliers`, fiches:[
+              { title:'Être/Avoir/Aller/Faire',
+                html:`<ul class="small"><li><strong>être</strong> : je suis, tu es, il est, nous sommes...</li>
+                      <li><strong>avoir</strong> : j’ai, tu as, il a...</li>
+                      <li><strong>aller</strong> : je vais, tu vas, il va...</li>
+                      <li><strong>faire</strong> : je fais, tu fais, il fait...</li></ul>
+                      <div class="ex"><strong>Exercice</strong> : Conjuguez « aller » (nous) au présent.
+                        <details><summary>Correction</summary><div>Nous <strong>allons</strong>.</div></details></div>`}
+          ]}
+        ]},
+        { title:`${I.verbes} Verbes`, items:[
+          { title:`${I.conjugueur} Conjugueur`, fiches:[
+              { title:'Chercher un verbe',
+                html:`<p class="small">Astuce : tapez « verbe + conjugaison » dans la recherche du site (à venir).</p>`}
+          ]}
+        ]},
+        { title:`${I.noms} Noms & groupes nominaux`, items:[
+          { title:`${I.articles} Articles`, fiches:[
+              { title:'Défini / indéfini / partitif',
+                html:`<p><strong>le, la, les</strong> ; <strong>un, une, des</strong> ; <strong>du, de la, de l’, des</strong>.</p>
+                      <div class="ex"><strong>Choisissez</strong> : « ___ eau », « ___ pommes », « ___ sucre ».
+                        <details><summary>Correction</summary><div><strong>de l’</strong> eau ; <strong>des</strong> pommes ; <strong>du</strong> sucre.</div></details></div>`}
+          ]},
+          { title:`${I.pronoms} Déterminants & pronoms`, fiches:[
+              { title:'Possessifs / démonstratifs / relatifs',
+                html:`<p><strong>mon/ma/mes</strong>, <strong>ce/cet/cette/ces</strong>, relatifs : <strong>qui/que/où/dont</strong>.</p>`}
+          ]},
+          { title:`${I.adjectifs} Adjectifs`, fiches:[
+              { title:'Accords & place',
+                html:`<p>Accord en genre/nombre. Place <em>avant</em> pour certains (beau, grand, petit…).</p>
+                      <div class="ex"><strong>Exercice</strong> : « des robes (bleu) » → …
+                        <details><summary>Correction</summary><div>des robes <strong>bleues</strong>.</div></details></div>`}
+          ]},
+          { title:`${I.adverbes} Adverbes`, fiches:[
+              { title:'Formation en -ment',
+                html:`<p>Adjectif fém. + <strong>-ment</strong> : <em>heureux → heureusement</em>.</p>`}
+          ]},
+          { title:`${I.preps} Prépositions`, fiches:[
+              { title:'À / De / En / Dans',
+                html:`<p><strong>En</strong> + pays fém. / voyelle ; <strong>au</strong> + pays masc. ; <strong>aux</strong> + pluriel. <em>En France</em>, <em>au Brésil</em>, <em>aux États-Unis</em>.</p>`}
+          ]},
+          { title:`${I.phrase} Structure de la phrase`, fiches:[
+              { title:'SVO / négation / interrogation',
+                html:`<p>Français : <strong>Sujet–Verbe–Objets</strong>. Négation : <em>ne … pas</em>. Interrogation : <em>Est-ce que…</em></p>`}
+          ]}
+        ]}
+      ]
+    },
+    {
+      id:'vocabulaire', title:`${I.vocab} Vocabulaire`,
+      groups: [
+        { title:`${I.confondre} Mots à ne pas confondre`, items:[
+          { title:'Homophones', fiches:[
+              { title:'a/à ; ou/où ; ces/ses',
+                html:`<p><strong>a/à</strong> : verbe/lieu ; <strong>ou/où</strong> : choix/lieu ; <strong>ces/ses</strong> : démonstratif/possession.</p>
+                      <div class="ex"><strong>Complétez</strong> : « Il <em>__</em> faim », « Tu vas <em>__</em> Paris ? »
+                        <details><summary>Correction</summary><div>a ; à</div></details></div>`}
+          ]}
+        ]},
+        { title:`${I.conj} Conjonctions`, items:[
+          { title:'Coordination / subordination', fiches:[
+              { title:'mais, ou, et… / parce que, lorsque…',
+                html:`<p>Reliez deux propositions : <em>Je viens <strong>parce que</strong> tu m’as invité(e).</em></p>`}
+          ]}
+        ]},
+        { title:`${I.nombres} Nombres, date et heure`, items:[
+          { title:'Chiffres & dates', fiches:[
+              { title:'Heure & formats',
+                html:`<p><strong>Il est</strong> 7h30 ; le <strong>15/09/2025</strong> ; « <em>Nous sommes le</em> … ».</p>`}
+          ]}
+        ]},
+        { title:`${I.pays} Pays et gentilés`, items:[
+          { title:'Cartes & listes', fiches:[
+              { title:'Nationalités',
+                html:`<p>France → français(e) ; Brésil → brésilien(ne) ; Portugal → portugais(e)…</p>`}
+          ]}
+        ]},
+        { title:`${I.expressions} Expressions`, items:[
+          { title:'Idiomes courants', fiches:[
+              { title:'Avoir besoin de / être en retard…',
+                html:`<p><em>J’ai besoin de</em> repos ; <em>Je suis en retard</em> ; <em>Ça marche !</em></p>`}
+          ]}
+        ]},
+        { title:`${I.thematique} Vocabulaire thématique`, items:[
+          { title:'Vie quotidienne', fiches:[
+              { title:'Alimentation / Santé / Transports',
+                html:`<ul class="small"><li>Alimentation : <em>le marché, cuisiner, goûter</em></li>
+                      <li>Santé : <em>se soigner, une ordonnance</em></li>
+                      <li>Transports : <em>un billet, la correspondance</em></li></ul>
+                      <div class="ex"><strong>Associez</strong> : « gare — », « ordonnance — »
+                        <details><summary>Correction</summary><div>gare — train ; ordonnance — médecin</div></details></div>`}
+          ]}
+        ]},
+        { title:`${I.calendrier} Calendrier de vocabulaire`, items:[
+          { title:'Programme 12 semaines', fiches:[
+              { title:'Exemple S1→S3',
+                html:`<p class="small">S1 : salutations ; S2 : famille ; S3 : ville/transports…</p>`}
+          ]}
+        ]}
+      ]
+    },
+    {
+      id:'comprehension', title:`${I.comprehension} Compréhension écrite et orale`,
+      groups: [
+        { title:`${I.ecrite} Compréhension écrite`, items:[
+          { title:'Textes gradués', fiches:[
+              { title:'A1–A2 : Annonce simple',
+                html:`<p><em>Texte :</em> « La médiathèque est ouverte du mardi au samedi. »</p>
+                      <div class="ex"><strong>Question</strong> : Quel jour est-elle fermée ?
+                        <details><summary>Correction</summary><div>Le dimanche et le lundi.</div></details></div>`}
+          ]}
+        ]},
+        { title:`${I.orale} Compréhension orale`, items:[
+          { title:'Audio & vidéo', fiches:[
+              { title:'Dialogues du quotidien',
+                html:`<p class="small">En classe : écoute guidée « À la boulangerie » (intention, prix, politesse).</p>`}
+          ]}
+        ]}
+      ]
+    },
+    {
+      id:'atelier', title:`${I.ecriture} Atelier d’écriture`,
+      groups: [
+        { title:`${I.ponctuation} La ponctuation`, items:[
+          { title:'Signes & usages', fiches:[
+              { title:', ; : … ! ?',
+                html:`<p>Le <strong>;</strong> sépare deux phrases proches ; <strong>:</strong> introduit une explication ; <strong>…</strong> effet d’attente.</p>`}
+          ]}
+        ]},
+        { title:`${I.figures} Figures de style`, items:[
+          { title:'Fréquentes', fiches:[
+              { title:'Comparaison / métaphore / hyperbole',
+                html:`<p><em>clair comme l’eau</em> (comparaison), <em>océan de papiers</em> (hyperbole).</p>`}
+          ]}
+        ]},
+        { title:`${I.pov} Point de vue narratif`, items:[
+          { title:'Focalisations', fiches:[
+              { title:'Interne / externe / omniscient',
+                html:`<p>Interne = pensée d’un perso ; Externe = caméra objective ; Omniscient = tout savoir.</p>`}
+          ]}
+        ]},
+        { title:`${I.registres} Les registres de langue`, items:[
+          { title:'Soutenu / courant / familier', fiches:[
+              { title:'Adapter au contexte',
+                html:`<p><em>Je vous prie de</em> (soutenu) / <em>Merci de</em> (courant) / <em>Tu peux</em> (familier).</p>`}
+          ]}
+        ]},
+        { title:`${I.image} Décrire une image`, items:[
+          { title:'Méthode pas à pas', fiches:[
+              { title:'Observer → nommer → relier',
+                html:`<p>1) Qui/quoi/où ? 2) Couleurs, positions, actions 3) Hypothèses, interprétation.</p>
+                      <div class="ex"><strong>Exercice</strong> : Décrivez une photo de classe (3 phrases).
+                        <details><summary>Proposition</summary><div>On voit une prof devant le tableau. Les étudiants écrivent. L’ambiance est studieuse.</div></details></div>`}
+          ]}
+        ]}
+      ]
+    }
+  ];
+
+  // ---------- Rendu ----------
+  const accRoot = document.getElementById('acc-container');
+  const tocRoot = document.getElementById('toc-links');
+  const search = document.getElementById('search');
+
+  tocRoot.innerHTML = DATA.map(s=>`<a href="#${s.id}" data-id="${s.id}">${s.title}</a>`).join('');
+
+  function renderAccordions(filter=''){
+    const q = filter.trim().toLowerCase();
+    accRoot.innerHTML = DATA.map(section=>{
+      // groupes → items → fiches (contenu)
+      const htmlGroups = section.groups.map(g=>{
+        const items = g.items.map(it=>{
+          // Filtrage simple
+          const fiches = (it.fiches||[])
+            .filter(f => !q || f.title.toLowerCase().includes(q) || (f.html && f.html.toLowerCase().includes(q)))
+            .map(f=>`<div class="fiche">
+                        <h5><span class="ico">📄</span>${f.title}</h5>
+                        <div>${f.html}</div>
+                      </div>`).join('');
+          if (!fiches) return '';
+          return `<div class="sub">
+                    <h4><span class="ico">📚</span>${it.title}</h4>
+                    <div class="items">${fiches}</div>
+                  </div>`;
+        }).join('');
+        if (!items.replace(/\s/g,'').length) return '';
+        return `<div class="card" style="padding:12px">${items}</div>`;
+      }).join('');
+
+      if (!htmlGroups.replace(/\s/g,'').length) return '';
+      return `
+        <div class="acc" id="${section.id}">
+          <div class="acc-hd" role="button" aria-expanded="false">
+            <h3>${section.title}</h3>
+            <span class="badge-k">${section.groups.length} groupes</span>
+            <span class="chev">▶</span>
+          </div>
+          <div class="acc-bd">${htmlGroups}</div>
+        </div>`;
+    }).join('');
+
+    attachAccHandlers();
+    restoreStateFromHash();
+  }
+
+  function attachAccHandlers(){
+    accRoot.querySelectorAll('.acc').forEach(acc=>{
+      const hd = acc.querySelector('.acc-hd');
+      hd.addEventListener('click', ()=>{
+        acc.classList.toggle('open');
+        const open = acc.classList.contains('open');
+        hd.setAttribute('aria-expanded', open?'true':'false');
+        // persist
+        const key='acc-open';
+        const set = new Set(JSON.parse(localStorage.getItem(key) || '[]'));
+        open ? set.add(acc.id) : set.delete(acc.id);
+        localStorage.setItem(key, JSON.stringify([...set]));
+        history.replaceState(null,'',`#${acc.id}`);
+      });
+    });
+  }
+
+  function restoreOpenFromStorage(){
+    const key='acc-open';
+    const open = new Set(JSON.parse(localStorage.getItem(key) || '[]'));
+    open.forEach(id=>{
+      const el=document.getElementById(id);
+      if(el){ el.classList.add('open'); el.querySelector('.acc-hd')?.setAttribute('aria-expanded','true'); }
+    });
+  }
+
+  function restoreStateFromHash(){
+    const id = decodeURIComponent(location.hash.replace('#',''));
+    if(!id) return;
+    const el = document.getElementById(id);
+    if(el){
+      el.classList.add('open');
+      el.querySelector('.acc-hd')?.setAttribute('aria-expanded','true');
+      setTimeout(()=>{ el.scrollIntoView({behavior:'smooth', block:'start'}); }, 50);
+    }
+  }
+
+  // Recherche
+  search.addEventListener('input', (e)=>{
+    const q = e.target.value;
+    renderAccordions(q);
+    highlight(q);
+  });
+
+  function highlight(q){
+    accRoot.querySelectorAll('.hit').forEach(el=>el.classList.remove('hit'));
+    if(!q.trim()) return;
+    const t = q.trim().toLowerCase();
+    accRoot.querySelectorAll('.sub h4, .fiche h5, .acc-hd h3').forEach(el=>{
+      if(el.textContent.toLowerCase().includes(t)){
+        el.closest('.acc, .sub, .fiche')?.classList.add('hit');
+        const acc = el.closest('.acc');
+        if(acc){ acc.classList.add('open'); acc.querySelector('.acc-hd')?.setAttribute('aria-expanded','true'); }
+      }
+    });
+  }
+
+  // Init
+  renderAccordions('');
+  restoreOpenFromStorage();
+
+  // TOC actif
+  function syncTOC(){
+    const hash = location.hash.replace('#','');
+    tocRoot.querySelectorAll('a').forEach(a=>{
+      a.classList.toggle('active', a.getAttribute('data-id')===hash);
+    });
+  }
+  window.addEventListener('hashchange', syncTOC);
+  syncTOC();
+
+  document.getElementById('year').textContent = new Date().getFullYear();
+</script>
 </body>
 </html>
