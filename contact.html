@@ -2,10 +2,97 @@
 <html lang="fr">
 <head>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <title>Contact — Cours de Français</title>
-  <meta name="description" content="">
+  <meta name="description" content="Contactez Domingas Silva (UFRB) : WhatsApp, appel, e-mail ou formulaire. Essai gratuit 15 min. A1→B2.">
   <link rel="stylesheet" href="assets/styles.css">
+  <style>
+    .contact-hero{
+      padding:36px 0; border-bottom:1px solid rgba(148,163,184,.12);
+      background:linear-gradient(90deg, rgba(91,156,255,.18), rgba(168,85,247,.18));
+      color:#fff;
+    }
+    .contact-hero h2{margin:0}
+    .contact-hero .small{color:#e5e7eb}
+
+    .contact-grid{display:grid; gap:18px; align-items:start}
+    @media(min-width:1000px){ .contact-grid{grid-template-columns:1.1fr .9fr} }
+
+    /* Cartes */
+    .cards{display:grid; gap:12px}
+    @media(min-width:820px){ .cards{grid-template-columns:repeat(3,1fr)} }
+    .card.contact{
+      display:flex; gap:12px; align-items:center; padding:14px;
+      background:linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.03));
+      border:1px solid rgba(148,163,184,.15); border-radius:16px;
+    }
+    .info h4{margin:0 0 6px; color:#e2e8f0}
+    .info .small{color:#cbd5e1}
+
+    /* Boutons icône-seule */
+    .iconbtn{
+      --c: #e2e8f0;            /* couleur par défaut */
+      width:48px; height:48px; border-radius:999px;
+      display:inline-flex; align-items:center; justify-content:center;
+      border:2px solid var(--c); color:var(--c); background:transparent;
+      transition:transform .08s ease, box-shadow .2s, background .2s, color .2s, border-color .2s;
+      cursor:pointer; text-decoration:none; outline:0;
+    }
+    .iconbtn:hover{transform:translateY(-1px); box-shadow:0 8px 18px rgba(0,0,0,.18)}
+    .iconbtn:focus{outline:2px solid rgba(91,156,255,.6); outline-offset:3px}
+    .iconbtn svg{display:block}
+
+    /* Variantes marque (couleurs officielles) */
+    .iconbtn.wa{--c:#25D366}
+    .iconbtn.wa:hover{background:#25D366; color:#0f172a; border-color:#25D366}
+
+    .iconbtn.tel{--c:#9CA3AF}      /* gris neutre pour l'appel */
+    .iconbtn.tel:hover{background:#9CA3AF; color:#0f172a}
+
+    .iconbtn.mail{--c:#F59E0B}     /* amber pour e-mail */
+    .iconbtn.mail:hover{background:#F59E0B; color:#0f172a}
+
+    .socials{display:flex; gap:10px; flex-wrap:wrap}
+    .iconbtn.li{--c:#0A66C2}
+    .iconbtn.li:hover{background:#0A66C2; color:#fff}
+    .iconbtn.ig{--c:#E4405F}
+    .iconbtn.ig:hover{background:#E4405F; color:#fff}
+
+    /* Form premium */
+    .form-card{
+      background:linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.03));
+      border:1px solid rgba(148,163,184,.15); border-radius:16px; padding:16px;
+      box-shadow:0 8px 24px rgba(0,0,0,.18);
+    }
+    .f-row{display:grid; gap:12px}
+    @media(min-width:680px){ .f-row.two{grid-template-columns:1fr 1fr} }
+    .field{position:relative}
+    .input,.select,.textarea{
+      width:100%; padding:14px 12px; border:1px solid rgba(148,163,184,.28);
+      border-radius:12px; background:rgba(255,255,255,.03); color:#fff; outline:none;
+    }
+    .textarea{min-height:120px; resize:vertical}
+    .label{
+      position:absolute; left:12px; top:12px; color:#94a3b8; pointer-events:none; transition:all .15s ease; padding:0 4px;
+    }
+    .input:focus,.select:focus,.textarea:focus{outline:2px solid rgba(91,156,255,.5); outline-offset:2px}
+    .input:not(:placeholder-shown)+.label,
+    .textarea:not(:placeholder-shown)+.label,
+    .select.filled+.label,
+    .input:focus+.label,.textarea:focus+.label{top:-8px; font-size:12px; color:#cbd5e1; background:#0f172a}
+    .row-actions{display:flex; gap:10px; flex-wrap:wrap; align-items:center}
+    .muted{color:#94a3b8; font-size:12px}
+
+    .side .box{
+      background:linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.03));
+      border:1px solid rgba(148,163,184,.15); border-radius:16px; padding:14px;
+    }
+    .opening{display:grid; gap:6px}
+    .opening .row{display:flex; justify-content:space-between; color:#cbd5e1}
+
+    .gdpr{font-size:12px; color:#94a3b8; border-left:3px solid #059669; background:#0b1a15; padding:10px; border-radius:10px}
+    .spacer{flex:1}
+  </style>
 </head>
 <body>
 <header>
@@ -16,44 +103,214 @@
     </div>
     <button class="burger" aria-label="Ouvrir le menu" aria-expanded="false" aria-controls="navlinks">☰</button>
     <div class="navlinks" id="navlinks">
-      <a class="" href="index.html">Accueil</a>
-      <a class="" href="apropos.html">À propos</a>
-      <a class="" href="cours.html">Cours</a>
-      <a class="" href="ressources.html">Ressources</a>
-      <a class="" href="test-niveau.html">Test de niveau</a>
+      <a href="index.html">Accueil</a>
+      <a href="apropos.html">À propos</a>
+      <a href="cours.html">Cours</a>
+      <a href="ressources.html">Ressources</a>
+      <a href="test-niveau.html">Test de niveau</a>
       <a class="active" href="contact.html">Contact</a>
       <a class="btn btn-primary" href="contact.html#inscription">S’inscrire</a>
     </div>
   </nav>
 </header>
 
-<section class="container footer-grid">
-  <div>
-    <h3>Contact</h3>
-    <p><strong>Téléphone</strong> : <a href="tel:+557599950452">+55 75 9995‑0452</a><br>
-       <strong>Email</strong> : <a href="mailto:domingas@aluno.ufrb.edu.br">domingas@aluno.ufrb.edu.br</a><br>
-       <strong>Lieu</strong> : UFRB — Cruz das Almas, Brésil</p>
-    <p class="small">Suivez aussi : <a href="https://www.linkedin.com/" target="_blank" rel="noopener">LinkedIn</a> · <a href="https://www.instagram.com/" target="_blank" rel="noopener">Instagram</a></p>
+<main class="contact-hero">
+  <div class="container">
+    <h2>Contact</h2>
+    <p class="small">Choisissez le canal qui vous convient. Chaque bouton icône effectue directement l’action.</p>
   </div>
-  <div class="card" id="inscription">
-    <h3 style="margin-top:0">Formulaire de contact</h3>
-    <form onsubmit="return handleSubmit(event)">
-      <label>Nom<br><input required name="name" class="input"></label>
-      <label>Email<br><input type="email" required name="email" class="input"></label>
-      <label>Message<br><textarea required name="message" rows="4" class="input"></textarea></label>
-      <button class="btn btn-primary" type="submit">Envoyer</button>
-    </form>
-    <p class="small">Aucun serveur requis : l’envoi ouvrira votre client mail.</p>
+</main>
+
+<section class="container" style="padding-top:22px">
+  <div class="contact-grid">
+    <div>
+      <!-- CARTES CONTACT AVEC BOUTON ICÔNE SEULE -->
+      <div class="cards" style="margin-bottom:12px">
+        <!-- WhatsApp -->
+        <div class="card contact">
+          <div class="info">
+            <h4>WhatsApp</h4>
+            <div class="small">Échanges rapides, vocal possible</div>
+          </div>
+          <div class="spacer"></div>
+          <a class="iconbtn wa" href="https://wa.me/557599950452" target="_blank" rel="noopener" aria-label="Ouvrir WhatsApp">
+            <!-- logo WhatsApp -->
+            <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 32 32" fill="currentColor" aria-hidden="true">
+              <path d="M16 .4C7.3.4.1 7.6.1 16.3c0 2.9.8 5.6 2.2 8L.4 31.6l7.5-1.9c2.2 1.2 4.7 1.9 7.3 1.9 8.7 0 15.9-7.2 15.9-15.9S24.7.4 16 .4zM9.2 8.8c.1-.3.4-.7.9-.7h.7c.2 0 .5 0 .8.6.3.7 1 2.6 1.1 2.8.1.2.2.5.1.8-.1.3-.2.4-.4.6l-.4.5c-.1.1-.3.3-.1.6.2.3.9 1.5 2 2.4 1.4 1.2 2.6 1.6 3 .1.4-.5.7-.5 1.2-.3.5.2 3 1.4 3.6 1.7.5.3.9.4 1 .6.1.2.1 1.3-.3 2.6-.4 1.2-2.3 2.1-3.2 2.1-.8 0-1.6.6-5.4-1.2-4.6-2.1-7.6-6.9-7.8-7.2-.2-.3-1.9-2.5-1.9-4S9 9.2 9.2 8.8z"/>
+            </svg>
+          </a>
+        </div>
+
+        <!-- Appel -->
+        <div class="card contact">
+          <div class="info">
+            <h4>Appel</h4>
+            <div class="small">Lun–Ven, 9h–18h (BR)</div>
+          </div>
+          <div class="spacer"></div>
+          <a class="iconbtn tel" href="tel:+557599950452" aria-label="Appeler Domingas">
+            <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M6.62 10.79a15.91 15.91 0 006.59 6.59l2.2-2.2a1 1 0 011.01-.24c1.12.37 2.33.57 3.58.57a1 1 0 011 1v3.5a1 1 0 01-1 1C10.07 22 2 13.93 2 4.5a1 1 0 011-1H6.5a1 1 0 011 1c0 1.25.2 2.46.57 3.58.1.33.03.68-.24 1.01l-2.21 2.2z"/>
+            </svg>
+          </a>
+        </div>
+
+        <!-- E-mail -->
+        <div class="card contact">
+          <div class="info">
+            <h4>E-mail</h4>
+            <div class="small">Réponse sous 24h ouvrées</div>
+          </div>
+          <div class="spacer"></div>
+          <a class="iconbtn mail" href="mailto:domingas@aluno.ufrb.edu.br" aria-label="Envoyer un e-mail">
+            <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M20 4H4a2 2 0 00-2 2v12a2 2 0 002 2h16a2 2 0 002-2V6a2 2 0 00-2-2zm0 2v.01L12 13 4 6.01V6h16zM4 18V8.83l8 6.99 8-6.99V18H4z"/>
+            </svg>
+          </a>
+        </div>
+      </div>
+
+      <!-- Formulaire -->
+      <div class="form-card" id="inscription">
+        <h3 style="margin:4px 0 10px">Formulaire de contact</h3>
+        <form onsubmit="return handleSubmit(event)">
+          <div class="f-row two">
+            <div class="field">
+              <input class="input" name="name" id="f-name" placeholder=" " required>
+              <label class="label" for="f-name">Nom</label>
+            </div>
+            <div class="field">
+              <input class="input" type="email" name="email" id="f-email" placeholder=" " required>
+              <label class="label" for="f-email">Email</label>
+            </div>
+          </div>
+
+          <div class="f-row two">
+            <div class="field">
+              <select class="select" name="reason" id="f-reason" onchange="this.classList.add('filled')" required>
+                <option value="" disabled selected>Choisir…</option>
+                <option>Inscription</option>
+                <option>Essai gratuit</option>
+                <option>Informations programmes</option>
+                <option>Autre</option>
+              </select>
+              <label class="label" for="f-reason">Motif</label>
+            </div>
+            <div class="field">
+              <input class="input" name="phone" id="f-phone" placeholder=" ">
+              <label class="label" for="f-phone">Téléphone (optionnel)</label>
+            </div>
+          </div>
+
+          <div class="f-row">
+            <div class="field">
+              <textarea class="textarea" name="message" id="f-message" placeholder=" " required></textarea>
+              <label class="label" for="f-message">Votre message</label>
+            </div>
+          </div>
+
+          <div class="row-actions" style="margin-top:6px">
+            <button class="btn btn-primary" type="submit">Envoyer</button>
+            <span class="muted">Aucun serveur requis : l’envoi ouvre votre client mail.</span>
+          </div>
+
+          <div class="gdpr" style="margin-top:10px">
+            <strong>Confidentialité :</strong> vos informations ne sont utilisées que pour répondre à votre demande (pas de partage commercial, pas de newsletter cachée).
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <!-- Colonne droite -->
+    <aside class="side">
+      <div class="box">
+        <h4 style="margin:6px 0 10px">Réseaux sociaux</h4>
+        <div class="socials">
+          <a class="iconbtn li" href="https://www.linkedin.com/" target="_blank" rel="noopener" aria-label="Ouvrir LinkedIn">
+            <!-- LinkedIn -->
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M4.98 3.5a2.5 2.5 0 11-.001 5.001A2.5 2.5 0 014.98 3.5zM3 9h4v12H3V9zm7 0h3.7v1.7h.05c.52-.98 1.8-2 3.7-2 4 0 4.75 2.63 4.75 6v6.3h-4V15c0-1.43-.03-3.28-2-3.28-2 0-2.3 1.56-2.3 3.17v6.1h-4V9z"/>
+            </svg>
+          </a>
+          <a class="iconbtn ig" href="https://www.instagram.com/" target="_blank" rel="noopener" aria-label="Ouvrir Instagram">
+            <!-- Instagram -->
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M7 2C4.2 2 2 4.2 2 7v10c0 2.8 2.2 5 5 5h10c2.8 0 5-2.2 5-5V7c0-2.8-2.2-5-5-5H7zm10 2c1.7 0 3 1.3 3 3v10c0 1.7-1.3 3-3 3H7c-1.7 0-3-1.3-3-3V7c0-1.7 1.3-3 3-3h10zm-5 3a5 5 0 100 10 5 5 0 000-10zm0 2a3 3 0 110 6 3 3 0 010-6zm4.8-.9a1.1 1.1 0 11-2.2 0 1.1 1.1 0 012.2 0z"/>
+            </svg>
+          </a>
+        </div>
+      </div>
+
+      <div class="box" style="margin-top:12px">
+        <h4 style="margin:6px 0 10px">Horaires (BR)</h4>
+        <div class="opening">
+          <div class="row"><span>Lundi — Vendredi</span><span>09:00–18:00</span></div>
+          <div class="row"><span>Samedi</span><span>10:00–13:00</span></div>
+          <div class="row"><span>Dimanche</span><span>Fermé</span></div>
+        </div>
+      </div>
+
+      <div class="box" style="margin-top:12px">
+        <h4 style="margin:6px 0 10px">Lieu</h4>
+        <div class="small" style="color:#cbd5e1">UFRB — Cruz das Almas, Brésil</div>
+        <div class="card" style="margin-top:10px; padding:0; overflow:hidden">
+          <!-- Remplace le src ci-dessous par ton iframe "Partager > Intégrer une carte" -->
+          <iframe 
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3892.83029268966!2d-39.0945371251126!3d-12.659129687628269!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x715bdec6dfcbca5%3A0x36640ed3734fec6d!2sUFRB!5e0!3m2!1sfr!2sus!4v1757273510977!5m2!1sfr!2sus"
+            width="100%" height="220" style="border:0" allowfullscreen="" loading="lazy"
+            referrerpolicy="no-referrer-when-downgrade" aria-label="Carte UFRB">
+          </iframe>
+        </div>
+      </div>
+    </aside>
   </div>
 </section>
-<section class="cta"><div class="container inner"><div><h3 style="margin:6px 0;color:#fff">Prêt·e à commencer ?</h3><div class="small">Réservez une place ou demandez un essai gratuit de 15 min.</div></div>
-<div><a class="btn btn-primary" href="https://wa.me/557599950452" target="_blank" rel="noopener">WhatsApp</a> <a class="btn btn-outline" href="mailto:domingas@aluno.ufrb.edu.br">E‑mail</a></div></div></section>
+
+<section class="cta">
+  <div class="container inner">
+    <div>
+      <h3 style="margin:6px 0;color:#fff">Prêt·e à commencer ?</h3>
+      <div class="small">Réservez une place ou demandez un essai gratuit de 15 min.</div>
+    </div>
+    <div>
+      <a class="btn btn-primary" href="https://wa.me/557599950452" target="_blank" rel="noopener">WhatsApp</a>
+      <a class="btn btn-outline" href="mailto:domingas@aluno.ufrb.edu.br">E-mail</a>
+    </div>
+  </div>
+</section>
 
 <footer>
   <div class="container footer-inner">
     <div class="small">© <span id="year"></span> Domingas Silva — Cours de Français · Design modernisé.</div>
   </div>
 </footer>
+
+<script>
+  function handleSubmit(e){
+    e.preventDefault();
+    const data = new FormData(e.target);
+    const name = (data.get('name')||'').trim();
+    const email = (data.get('email')||'').trim();
+    const phone = (data.get('phone')||'').trim();
+    const reason = (data.get('reason')||'').trim();
+    const message = (data.get('message')||'').trim();
+
+    const subject = encodeURIComponent(`[Contact] ${reason || 'Demande'} — ${name}`);
+    const body = encodeURIComponent(
+`Nom: ${name}
+Email: ${email}
+Téléphone: ${phone || '—'}
+Motif: ${reason}
+
+${message}
+
+— envoyé depuis le site`);
+    window.location.href = `mailto:domingas@aluno.ufrb.edu.br?subject=${subject}&body=${body}`;
+    return false;
+  }
+  document.getElementById('year').textContent = new Date().getFullYear();
+</script>
+
 <script src="assets/script.js" defer></script>
 </body>
 </html>
