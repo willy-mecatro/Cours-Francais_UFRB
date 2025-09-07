@@ -1,78 +1,247 @@
 <!DOCTYPE html>
-<html lang="fr"><head>
-<meta charset="utf-8"/><meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>Cours de Français — UFRB | Domingas Silva</title><meta name="description" content="Cours de français en présentiel à l’UFRB (Cruz das Almas). Méthode pratique et interactive. Groupes & individuel, A1→B2.">
+<html lang="fr">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>Cours de Français — UFRB | Domingas Silva</title>
+<meta name="description" content="Cours de français en présentiel à l’UFRB (Cruz das Almas). Méthode pratique et interactive. Groupes & individuel, A1→B2.">
 <link rel="icon" href="assets/favicon.png">
-<meta property="og:title" content="Cours de Français — UFRB | Domingas Silva"><meta property="og:description" content="Cours de français en présentiel à l’UFRB (Cruz das Almas). Méthode pratique et interactive. Groupes & individuel, A1→B2."><meta property="og:image" content="assets/og-image.jpg"><meta property="og:type" content="website">
-<script type="application/ld+json">{"@context": "https://schema.org", "@type": "Person", "name": "Domingas Silva", "jobTitle": "Enseignante de français", "address": {"@type": "PostalAddress", "addressLocality": "Cruz das Almas", "addressCountry": "BR"}, "email": "mailto:domingas@aluno.ufrb.edu.br", "telephone": "+55 75 9995-0452"}</script>
-<link rel="stylesheet" href="assets/styles.css"></head><body><header><nav class="container">
-<div class="brand"><svg class="flag" viewBox="0 0 3 2" aria-hidden="true"><rect width="1" height="2" x="0" fill="#002395"/><rect width="1" height="2" x="1" fill="#ffffff"/><rect width="1" height="2" x="2" fill="#ED2939"/></svg><h1>Cours de Français — Domingas Silva</h1></div>
-<button class="burger" aria-label="Ouvrir le menu" aria-expanded="false" aria-controls="navlinks">☰</button>
-<div class="navlinks" id="navlinks">
-  <a style="color:#fff"  href="index.html">Accueil</a>
-  <a  href="apropos.html">À propos</a>
-  <a  href="cours.html">Cours</a>
-  <a  href="ressources.html">Ressources</a>
-  <a  href="test-niveau.html">Test de niveau</a>
-  <a  href="contact.html">Contact</a>
-  <a class="btn btn-primary" href="contact.html#inscription">S’inscrire</a>
-</div></nav></header>
-<main class="hero"><div class="container hero-wrap">
-  <div>
-    <h2>Parlez français avec confiance</h2>
-    <p>Des cours <strong>présentiels</strong> à l’UFRB, adaptés à votre niveau, avec une méthode <strong>active</strong> : on parle, on écoute, on joue des situations réelles.</p>
-    <div class="badges"><span class="badge">FR 🇫🇷 · PT‑BR 🇧🇷</span><span class="badge">Groupes & individuel</span><span class="badge">A1 → B2</span></div>
-    <div><a class="btn btn-primary" href="contact.html#inscription">Essai gratuit 15 min</a> <a class="btn btn-outline" href="ressources.html">Voir une leçon</a></div>
-    <div class="kpis" style="margin-top:20px;grid-template-columns:repeat(3,1fr)">
-      <div class="kpi"><div class="num">150+</div><div class="lbl">Apprenants formés</div></div>
-      <div class="kpi"><div class="num">10 ans</div><div class="lbl">d’expérience</div></div>
-      <div class="kpi"><div class="num">98%</div><div class="lbl">satisfaction</div></div>
+<meta property="og:title" content="Cours de Français — UFRB | Domingas Silva">
+<meta property="og:description" content="Cours de français en présentiel à l’UFRB (Cruz das Almas). Méthode pratique et interactive. Groupes & individuel, A1→B2.">
+<meta property="og:image" content="assets/og-image.jpg">
+<meta property="og:type" content="website">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Person","name":"Domingas Silva","jobTitle":"Enseignante de français","address":{"@type":"PostalAddress","addressLocality":"Cruz das Almas","addressCountry":"BR"},"email":"mailto:domingas@aluno.ufrb.edu.br","telephone":"+55 75 9995-0452"}</script>
+<link rel="stylesheet" href="assets/styles.css">
+
+<style>
+  /* ====== AJOUTS CARROUSELS MOBILE ====== */
+  /* conteneur nav flèches (mobile only) */
+  .rail-wrap{position:relative}
+  .rail-btn{
+    position:absolute; top:40%; transform:translateY(-50%);
+    background:rgba(15,23,42,.85); color:#fff; border:1px solid rgba(148,163,184,.3);
+    width:38px; height:38px; border-radius:999px; display:none; align-items:center; justify-content:center;
+    box-shadow:0 6px 16px rgba(0,0,0,.25); z-index:5
+  }
+  .rail-btn:active{transform:translateY(-50%) scale(.98)}
+  .rail-prev{left:6px} .rail-next{right:6px}
+
+  /* piste horizontale avec scroll-snap */
+  .rail{
+    display:flex; gap:12px; overflow-x:auto; scroll-snap-type:x mandatory;
+    -webkit-overflow-scrolling:touch; padding-bottom:6px
+  }
+  .rail::-webkit-scrollbar{height:8px}
+  .rail::-webkit-scrollbar-thumb{background:rgba(148,163,184,.35); border-radius:999px}
+  .snap{scroll-snap-align:center}
+
+  /* vignettes galerie */
+  .gallery .item{min-width:78%; border:1px solid rgba(148,163,184,.25); border-radius:16px; overflow:hidden; background:#0f172a}
+  .gallery .item img{display:block; width:100%; height:230px; object-fit:cover}
+
+ /* === Logos partenaires (fond blanc) === */
+ .logos-rail .logo{
+  min-width:46%; /* mobile : ~2 logos visibles */
+  border:1px solid rgba(148,163,184,.25);
+  border-radius:14px;
+  background:#fff;              /* 👉 fond blanc */
+  padding:10px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+ }
+ .logos-rail .logo img{
+  max-height:46px;
+  width:auto;
+  object-fit:contain;           /* conserve les proportions */
+ }
+
+
+  
+  /* bouton indicateur (mobile) */
+  .hint{font-size:12px; color:#94a3b8; margin-top:6px}
+
+  /* Desktop/Tablet : on garde tes grilles existantes */
+  @media (min-width:780px){
+    .rail-wrap .rail-btn{display:none}
+    .gallery .item{min-width:auto}
+    .logos-rail .logo{min-width:auto}
+    .gallery{display:grid; grid-template-columns:repeat(3,1fr); gap:16px}
+    .gallery .item img{height:220px}
+  }
+
+  /* On affiche les flèches seulement sur mobile */
+  @media (max-width:779px){
+    .rail-wrap:hover .rail-btn{display:flex}
+    /* toujours visibles sur mobile pour accessibilité tactile */
+    .rail-btn{display:flex}
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <nav class="container">
+    <div class="brand">
+      <svg class="flag" viewBox="0 0 3 2" aria-hidden="true"><rect width="1" height="2" x="0" fill="#002395"/><rect width="1" height="2" x="1" fill="#ffffff"/><rect width="1" height="2" x="2" fill="#ED2939"/></svg>
+      <h1>Cours de Français — Domingas Silva</h1>
+    </div>
+    <button class="burger" aria-label="Ouvrir le menu" aria-expanded="false" aria-controls="navlinks">☰</button>
+    <div class="navlinks" id="navlinks">
+      <a style="color:#fff" href="index.html">Accueil</a>
+      <a href="apropos.html">À propos</a>
+      <a href="cours.html">Cours</a>
+      <a href="ressources.html">Ressources</a>
+      <a href="test-niveau.html">Test de niveau</a>
+      <a href="contact.html">Contact</a>
+      <a class="btn btn-primary" href="contact.html#inscription">S’inscrire</a>
+    </div>
+  </nav>
+</header>
+
+<main class="hero">
+  <div class="container hero-wrap">
+    <div>
+      <h2>Parlez français avec confiance</h2>
+      <p>Des cours <strong>présentiels</strong> à l’UFRB, adaptés à votre niveau, avec une méthode <strong>active</strong> : on parle, on écoute, on joue des situations réelles.</p>
+      <div class="badges">
+        <span class="badge">FR 🇫🇷 · PT-BR 🇧🇷</span>
+        <span class="badge">Groupes & individuel</span>
+        <span class="badge">A1 → B2</span>
+      </div>
+      <div>
+        <a class="btn btn-primary" href="contact.html#inscription">Essai gratuit 15 min</a>
+        <a class="btn btn-outline" href="ressources.html">Voir une leçon</a>
+      </div>
+      <div class="kpis" style="margin-top:20px;grid-template-columns:repeat(3,1fr)">
+        <div class="kpi"><div class="num">150+</div><div class="lbl">Apprenants formés</div></div>
+        <div class="kpi"><div class="num">10 ans</div><div class="lbl">d’expérience</div></div>
+        <div class="kpi"><div class="num">98%</div><div class="lbl">satisfaction</div></div>
+      </div>
+    </div>
+    <div class="hero-media"><img src="assets/hero.jpg" alt="Cours de français en classe, UFRB"></div>
+  </div>
+</main>
+
+<section>
+  <div class="container grid grid-3">
+    <div class="feature card"><div class="ico">🎯</div><div><h4 style="margin:0 0 6px">Objectifs clairs</h4><div class="small">Plan précis par niveau, suivi des progrès.</div></div></div>
+    <div class="feature card"><div class="ico">🗣️</div><div><h4 style="margin:0 0 6px">Parole d’abord</h4><div class="small">Beaucoup de conversation et jeux de rôle authentiques.</div></div></div>
+    <div class="feature card"><div class="ico">📚</div><div><h4 style="margin:0 0 6px">Matériel fourni</h4><div class="small">Fiches & ressources adaptées à votre profil.</div></div></div>
+  </div>
+</section>
+
+<section>
+  <div class="container">
+    <h3>En images</h3>
+
+    <!-- ====== GALERIE: rail horizontal mobile ====== -->
+    <div class="rail-wrap">
+      <button class="rail-btn rail-prev" data-target="#gal" aria-label="Précédent">‹</button>
+      <button class="rail-btn rail-next" data-target="#gal" aria-label="Suivant">›</button>
+
+      <div id="gal" class="gallery rail" role="region" aria-label="Galerie photos (balayez pour défiler)">
+        <div class="item snap"><img src="assets/gallery-1.jpg" alt="Atelier de conversation"></div>
+        <div class="item snap"><img src="assets/gallery-2.jpg" alt="Activité de groupe"></div>
+        <div class="item snap"><img src="assets/gallery-3.jpg" alt="Exercices en classe"></div>
+      </div>
+    </div>
+    <div class="hint">Astuce : balayez horizontalement pour voir les images →</div>
+  </div>
+</section>
+
+<section>
+  <div class="container">
+    <h3>Ils nous font confiance</h3>
+
+    <!-- ====== LOGOS: rail horizontal mobile ====== -->
+    <div class="rail-wrap">
+      <button class="rail-btn rail-prev" data-target="#logos" aria-label="Précédent">‹</button>
+      <button class="rail-btn rail-next" data-target="#logos" aria-label="Suivant">›</button>
+
+      <div id="logos" class="logos-rail rail" role="region" aria-label="Logos partenaires (balayez pour défiler)">
+        <div class="logo snap"><img src="assets/logo1.jpg" alt="Logo partenaire 1"></div>
+        <div class="logo snap"><img src="assets/logo2.jpg" alt="Logo partenaire 2"></div>
+        <div class="logo snap"><img src="assets/logo3.jpg" alt="Logo partenaire 3"></div>
+        <div class="logo snap"><img src="assets/logo4.jpg" alt="Logo partenaire 4"></div>
+        <div class="logo snap"><img src="assets/logo5.jpg" alt="Logo partenaire 5"></div>
+      </div>
     </div>
   </div>
-  <div class="hero-media"><img src="assets/hero.jpg" alt="Cours de français en classe, UFRB"></div>
-</div></main>
+</section>
 
-<section><div class="container grid grid-3">
-  <div class="feature card"><div class="ico">🎯</div><div><h4 style="margin:0 0 6px">Objectifs clairs</h4><div class="small">Plan précis par niveau, suivi des progrès.</div></div></div>
-  <div class="feature card"><div class="ico">🗣️</div><div><h4 style="margin:0 0 6px">Parole d’abord</h4><div class="small">Beaucoup de conversation et jeux de rôle authentiques.</div></div></div>
-  <div class="feature card"><div class="ico">📚</div><div><h4 style="margin:0 0 6px">Matériel fourni</h4><div class="small">Fiches & ressources adaptées à votre profil.</div></div></div>
-</div></section>
-
-<section class="testi"><div class="container"><h3>Témoignages</h3>
-  <div class="items">
-    <div class="card"><strong>Camila (A2)</strong><br><span class="small">“J’ai réussi à tenir ma première conversation entière en français !”</span></div>
-    <div class="card"><strong>João (B1)</strong><br><span class="small">“Les jeux de rôle m’ont débloqué. Cours dynamiques et bienveillants.”</span></div>
-    <div class="card"><strong>Larissa (A1)</strong><br><span class="small">“Approche très claire. Je progresse chaque semaine.”</span></div>
+<section class="testi">
+  <div class="container">
+    <h3>Témoignages</h3>
+    <div class="items">
+      <div class="card"><strong>Camila (A2)</strong><br><span class="small">“J’ai réussi à tenir ma première conversation entière en français !”</span></div>
+      <div class="card"><strong>João (B1)</strong><br><span class="small">“Les jeux de rôle m’ont débloqué. Cours dynamiques et bienveillants.”</span></div>
+      <div class="card"><strong>Larissa (A1)</strong><br><span class="small">“Approche très claire. Je progresse chaque semaine.”</span></div>
+    </div>
   </div>
-</div></section>
+</section>
 
-<section><div class="container"><h3>En images</h3>
-  <div class="gallery">
-    <img src="assets/gallery-1.jpg" alt="Atelier de conversation">
-    <img src="assets/gallery-2.jpg" alt="Activité de groupe">
-    <img src="assets/gallery-3.jpg" alt="Exercices en classe">
+<section class="faq">
+  <div class="container">
+    <h3>FAQ</h3>
+    <details open><summary>Quels niveaux ?</summary><div class="small">A1 à B2. Un mini test permet de valider votre niveau.</div></details>
+    <details><summary>Groupes ou individuel ?</summary><div class="small">Les deux sont possibles, en présentiel à l’UFRB.</div></details>
+    <details><summary>Matériel et inscription ?</summary><div class="small">Tout est fourni. Contactez-moi pour un essai gratuit.</div></details>
   </div>
-</div></section>
+</section>
 
-<section><div class="container"><h3>Ils nous font confiance</h3>
-  <div class="logos grid grid-5">
-    <div class="card"><img src="assets/logo1.jpg" alt="Logo partenaire 1"></div>
-    <div class="card"><img src="assets/logo2.jpg" alt="Logo partenaire 2"></div>
-    <div class="card"><img src="assets/logo3.jpg" alt="Logo partenaire 3"></div>
-    <div class="card"><img src="assets/logo4.jpg" alt="Logo partenaire 4"></div>
-    <div class="card"><img src="assets/logo5.jpg" alt="Logo partenaire 5"></div>
+<section class="cta">
+  <div class="container inner">
+    <div>
+      <h3 style="margin:6px 0;color:#fff">Prêt·e à commencer ?</h3>
+      <div class="small">Réservez une place ou demandez un essai gratuit de 15 min.</div>
+    </div>
+    <div>
+      <a class="btn btn-primary" href="https://wa.me/557599950452" target="_blank" rel="noopener">WhatsApp</a>
+      <a class="btn btn-outline" href="contact.html#inscription">Formulaire</a>
+    </div>
   </div>
-</div></section>
+</section>
 
-<section class="faq"><div class="container"><h3>FAQ</h3>
-  <details open><summary>Quels niveaux ?</summary><div class="small">A1 à B2. Un mini test permet de valider votre niveau.</div></details>
-  <details><summary>Groupes ou individuel ?</summary><div class="small">Les deux sont possibles, en présentiel à l’UFRB.</div></details>
-  <details><summary>Matériel et inscription ?</summary><div class="small">Tout est fourni. Contactez‑moi pour un essai gratuit.</div></details>
-</div></section>
+<footer>
+  <div class="container footer-inner">
+    <div class="small">© <span id="year"></span> Domingas Silva — Cours de Français · Design pro.</div>
+  </div>
+</footer>
 
-<section class="cta"><div class="container inner">
-  <div><h3 style="margin:6px 0;color:#fff">Prêt·e à commencer ?</h3><div class="small">Réservez une place ou demandez un essai gratuit de 15 min.</div></div>
-  <div><a class="btn btn-primary" href="https://wa.me/557599950452" target="_blank" rel="noopener">WhatsApp</a> <a class="btn btn-outline" href="contact.html#inscription">Formulaire</a></div>
-</div></section>
-<footer><div class="container footer-inner"><div class="small">© <span id="year"></span> Domingas Silva — Cours de Français · Design pro.</div></div></footer>
-<script src="assets/script.js" defer></script></body></html>
+<!-- ====== JS : flèches et drag-to-scroll ====== -->
+<script>
+  // Boutons précédent/suivant
+  document.querySelectorAll('.rail-btn').forEach(btn=>{
+    btn.addEventListener('click', ()=>{
+      const target = document.querySelector(btn.dataset.target);
+      if(!target) return;
+      const card = target.querySelector('.snap');
+      const step = card ? card.getBoundingClientRect().width + 12 : target.clientWidth * 0.9;
+      target.scrollBy({left: btn.classList.contains('rail-next') ? step : -step, behavior:'smooth'});
+    });
+  });
+
+  // Drag (souris) + swipe (tactile) pour confort
+  document.querySelectorAll('.rail').forEach(rail=>{
+    let isDown = false, startX = 0, startScroll = 0;
+    const start = (x)=>{isDown=true; startX=x; startScroll=rail.scrollLeft; rail.classList.add('dragging');};
+    const move  = (x)=>{ if(!isDown) return; rail.scrollLeft = startScroll - (x - startX); };
+    const end   = ()=>{isDown=false; rail.classList.remove('dragging');};
+
+    rail.addEventListener('mousedown', e=>{start(e.pageX);});
+    window.addEventListener('mouseup', end);
+    rail.addEventListener('mousemove', e=>{move(e.pageX);});
+
+    rail.addEventListener('touchstart', e=>{start(e.touches[0].pageX);}, {passive:true});
+    window.addEventListener('touchend', end);
+    rail.addEventListener('touchmove', e=>{move(e.touches[0].pageX);}, {passive:true});
+  });
+
+  // Année dans le pied de page
+  document.getElementById('year').textContent = new Date().getFullYear();
+</script>
+
+<script src="assets/script.js" defer></script>
+</body>
+</html>
