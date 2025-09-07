@@ -37,7 +37,7 @@
     .sub .items{display:grid;gap:10px}
 
     .fiche{border:1px solid rgba(148,163,184,.22);border-radius:12px;padding:12px;background:rgba(255,255,255,.02);display:grid;gap:6px}
-    .fiche h5{margin:0;font-size:15px;color:#fff;display:flex;align-items:center;gap:8px}
+    .fiche h5{margin:0;font-size:15px;color:#fff}
     .fiche .small{color:#94a3b8}
     .fiche .actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:4px}
     .btn-mini{display:inline-flex;align-items:center;gap:8px;padding:8px 10px;border-radius:10px;font-weight:700;border:1px solid rgba(148,163,184,.25);background:rgba(255,255,255,.03);color:#e2e8f0;cursor:pointer}
@@ -84,7 +84,7 @@
 <main class="res-hero">
   <div class="container">
     <h2>Ressources de cours</h2>
-    <p class="small">Parcourez les thèmes, puis ouvrez chaque fiche dans le <strong>volet de lecture</strong> (droite) ou en <strong>slide-over</strong> sur mobile.</p>
+    <p class="small">Ouvrez les fiches dans le volet de lecture, ou cliquez <strong>PDF ⤴︎</strong> pour la version imprimable.</p>
   </div>
 </main>
 
@@ -98,7 +98,7 @@
       <div class="search">
         <input id="search" type="search" placeholder="Rechercher (ex : imparfait, adjectifs, pays…)">
       </div>
-      <div class="small" style="margin-top:6px;color:#94a3b8">Filtre les sections et fiches. Appuie sur Entrée pour valider.</div>
+      <div class="small" style="margin-top:6px;color:#94a3b8">Filtre les sections et fiches.</div>
     </div>
   </aside>
 
@@ -128,223 +128,213 @@
 </footer>
 
 <script>
-  // Icônes
-  const I = {
-    grammaire:'📘', temps:'⏱️', present:'🟢', passe:'🕰️', futur:'⏭️', conditionnel:'🤝', irreg:'🧩',
-    verbes:'🔤', conjugueur:'🧮', noms:'🏷️', articles:'📰', pronoms:'👥', adjectifs:'🎨', adverbes:'🏃', preps:'🧭', phrase:'🧱',
-    vocab:'🗂️', confondre:'⚠️', conj:'🔗', nombres:'🔢', pays:'🌍', expressions:'💬', thematique:'🧩', calendrier:'🗓️',
-    comprehension:'👂📖', ecrite:'📄', orale:'🎧', ecriture:'✍️', ponctuation:'✴️', figures:'✨', pov:'👁️', registres:'🎭', image:'🖼️'
+  /* === Pictos MINIMAUX : 1 par grande section seulement === */
+  const ICONS = {
+    grammaire:'📘',
+    vocabulaire:'🗂️',
+    comprehension:'📖',
+    atelier:'✍️'
   };
 
-  // ===================== DONNÉES COMPLÈTES (fiches) =====================
+  /* ====== DATA (sans pictos sur groupes/items/fiches) ====== */
   const DATA = [
     {
-      id:'grammaire', title:`${I.grammaire} Grammaire`,
+      id:'grammaire', title:`${ICONS.grammaire} Grammaire`,
       groups: [
-        { title:`${I.temps} Temps de l’indicatif`, items:[
-          { title:`${I.present} Présent`, fiches:[
-              { title:'Valeurs & formation',
-                html:`<p>Le <strong>présent de l’indicatif</strong> exprime une action en cours, une vérité générale ou un futur proche.</p>
-                      <ul class="small"><li><strong>-ER</strong> : parler → je parle, tu parles, il parle, nous parlons, vous parlez, ils parlent</li>
-                      <li><strong>-IR</strong> : finir → je finis, ... nous finissons, vous finissez, ils finissent</li>
-                      <li><strong>-RE</strong> : vendre → je vends, tu vends, il vend, nous vendons, vous vendez, ils vendent</li></ul>
-                      <div class="ex"><strong>Exercice</strong> : Conjuguez au présent : « nous (visiter) », « ils (choisir) ».
-                        <details><summary>Correction</summary><div>nous visitons ; ils choisissent</div></details></div>`},
-              { title:'Présent vs futur proche',
-                html:`<p>Le <em>futur proche</em> : <strong>aller + infinitif</strong> (<em>je vais partir</em>) pour un futur imminent, planifié.</p>
-                      <div class="ex"><strong>Exercice</strong> : Transformez au futur proche : « Je dîne. » → …
-                        <details><summary>Correction</summary><div>Je <strong>vais dîner</strong>.</div></details></div>`}
+        { title:`Temps de l’indicatif`, items:[
+          { title:`Présent`, fiches:[
+            { title:'Valeurs & formation',
+              pdf: 'assets/pdfs/present-valeurs-formation.pdf',
+              html:`<p>Le <strong>présent de l’indicatif</strong> exprime une action en cours, une vérité générale ou un futur proche.</p>
+                    <ul class="small"><li>-ER : je parle, nous parlons…</li><li>-IR : je finis, nous finissons…</li><li>-RE : je vends, nous vendons…</li></ul>
+                    <div class="ex"><strong>Exercice</strong> : « nous (visiter) », « ils (choisir) ». <details><summary>Correction</summary><div>nous visitons ; ils choisissent</div></details></div>`},
+            { title:'Présent vs futur proche',
+              pdf: 'assets/pdfs/present-vs-futur-proche.pdf',
+              html:`<p><em>aller + infinitif</em> : futur proche (imminent).</p>
+                    <div class="ex"><strong>Transformez</strong> : « Je dîne. » → Je <strong>vais dîner</strong>.</div>`}
           ]},
-          { title:`${I.passe} Passé composé`, fiches:[
-              { title:'Formation AVOIR/ÊTRE + participe',
-                html:`<p>Le <strong>passé composé</strong> = <em>auxiliaire (avoir/être) au présent</em> + <em>participe passé</em>.</p>
-                      <ul class="small"><li>Avec <strong>être</strong> (aller, venir, naître, mourir, monter…) : accord avec le sujet. <em>Elle est allée</em>.</li>
-                      <li>Avec <strong>avoir</strong> : accord avec COD <em>placé avant</em>. <em>Les fleurs qu’elle a achet<span style="text-decoration:underline">ées</span></em>.</li></ul>
-                      <div class="ex"><strong>Exercice</strong> : « Elles (arriver) » ; « Il a (manger) les pommes. »
-                        <details><summary>Correction</summary><div>Elles <strong>sont arrivées</strong> ; Il <strong>a mangé</strong> les pommes.</div></details></div>`},
-              { title:'Valeurs & emploi',
-                html:`<p>Action terminée, datée, avancée du récit : <em>Hier, j’ai fini le dossier.</em></p>`}
+          { title:`Passé composé`, fiches:[
+            { title:'Formation AVOIR/ÊTRE + participe',
+              pdf: 'assets/pdfs/passe-compose-formation.pdf',
+              html:`<p><em>auxiliaire</em> + <em>participe passé</em>. Accord avec <strong>être</strong> (sujet) ; avec <strong>avoir</strong> si COD <em>avant</em>.</p>`},
+            { title:'Valeurs & emploi',
+              pdf: 'assets/pdfs/passe-compose-valeurs.pdf',
+              html:`<p>Action achevée, datée : « Hier, j’ai fini… »</p>`}
           ]},
-          { title:`${I.passe} Imparfait / Passé composé`, fiches:[
-              { title:'Contraste narratif',
-                html:`<p><strong>Imparfait</strong> = décor, habitude, description ; <strong>Passé composé</strong> = actions qui font avancer l’histoire.</p>
-                      <div class="ex"><strong>Choix</strong> : « Je (lire) quand il (sonner). »
-                        <details><summary>Correction</summary><div>Je <strong>lisais</strong> quand il <strong>a sonné</strong>.</div></details></div>`}
+          { title:`Imparfait / Passé composé`, fiches:[
+            { title:'Contraste narratif',
+              pdf: 'assets/pdfs/imparfait-vs-pc.pdf',
+              html:`<p><strong>Imparfait</strong> = décor/habitude ; <strong>PC</strong> = actions.</p>`}
           ]},
-          { title:`${I.futur} Futur simple & antérieur`, fiches:[
-              { title:'Terminaisons & orthographe',
-                html:`<p>Futur simple : <em>parlerai, finiras, ira</em>. Attention aux bases : <em>voir → je verrai</em>.</p>
-                      <div class="ex"><strong>Exercice</strong> : Futur de « nous (pouvoir) » ; « elle (voir) ».
-                        <details><summary>Correction</summary><div>nous <strong>pourrons</strong> ; elle <strong>verra</strong>.</div></details></div>`},
-              { title:'Futur antérieur (valeurs)',
-                html:`<p>Action <em>achevée dans le futur</em> avant une autre : « Quand tu arriveras, j’<strong>aurai fini</strong>. »</p>`}
+          { title:`Futurs`, fiches:[
+            { title:'Futur simple — terminaisons',
+              pdf: 'assets/pdfs/futur-simple-terminaisons.pdf',
+              html:`<p>parlerai, finiras, verra…</p>`},
+            { title:'Futur antérieur — valeurs',
+              pdf: 'assets/pdfs/futur-anterieur.pdf',
+              html:`<p>« Quand tu arriveras, j’<strong>aurai fini</strong>. »</p>`}
           ]},
-          { title:`${I.conditionnel} Conditionnel`, fiches:[
-              { title:'Politesse & hypothèse',
-                html:`<p><strong>Conditionnel présent</strong> : <em>je voudrais, nous aimerions</em>. Sert à la politesse et aux hypothèses.</p>
-                      <div class="ex"><strong>Complétez</strong> : « Je (aimer) un café, s’il vous plaît. »
-                        <details><summary>Correction</summary><div>Je <strong>voudrais</strong> un café.</div></details></div>`}
+          { title:`Conditionnel`, fiches:[
+            { title:'Politesse & hypothèse',
+              pdf: 'assets/pdfs/conditionnel-politesse.pdf',
+              html:`<p><em>Je voudrais</em>…</p>`}
           ]},
-          { title:`${I.irreg} Verbes irréguliers`, fiches:[
-              { title:'Être/Avoir/Aller/Faire',
-                html:`<ul class="small"><li><strong>être</strong> : je suis, tu es, il est, nous sommes...</li>
-                      <li><strong>avoir</strong> : j’ai, tu as, il a...</li>
-                      <li><strong>aller</strong> : je vais, tu vas, il va...</li>
-                      <li><strong>faire</strong> : je fais, tu fais, il fait...</li></ul>
-                      <div class="ex"><strong>Exercice</strong> : Conjuguez « aller » (nous) au présent.
-                        <details><summary>Correction</summary><div>Nous <strong>allons</strong>.</div></details></div>`}
+          { title:`Verbes irréguliers`, fiches:[
+            { title:'Être / Avoir / Aller / Faire',
+              pdf: 'assets/pdfs/irreguliers-eaaf.pdf',
+              html:`<ul class="small"><li>être : je suis…</li><li>avoir : j’ai…</li><li>aller : je vais…</li><li>faire : je fais…</li></ul>`}
           ]}
         ]},
-        { title:`${I.verbes} Verbes`, items:[
-          { title:`${I.conjugueur} Conjugueur`, fiches:[
-              { title:'Chercher un verbe',
-                html:`<p class="small">Astuce : tapez « verbe + conjugaison » dans la recherche du site (module interne à venir).</p>`}
+        { title:`Verbes (outil)`, items:[
+          { title:`Conjugueur`, fiches:[
+            { title:'Chercher un verbe',
+              pdf: null,
+              html:`<p class="small">Astuce : « verbe + conjugaison » (module interne à venir).</p>`}
           ]}
         ]},
-        { title:`${I.noms} Noms & groupes nominaux`, items:[
-          { title:`${I.articles} Articles`, fiches:[
-              { title:'Défini / indéfini / partitif',
-                html:`<p><strong>le, la, les</strong> ; <strong>un, une, des</strong> ; <strong>du, de la, de l’, des</strong>.</p>
-                      <div class="ex"><strong>Choisissez</strong> : « ___ eau », « ___ pommes », « ___ sucre ».
-                        <details><summary>Correction</summary><div><strong>de l’</strong> eau ; <strong>des</strong> pommes ; <strong>du</strong> sucre.</div></details></div>`}
+        { title:`Noms & groupes nominaux`, items:[
+          { title:`Articles`, fiches:[
+            { title:'Défini / indéfini / partitif',
+              pdf: 'assets/pdfs/articles-definis-indefinis-partitifs.pdf',
+              html:`<p><strong>le/la/les</strong> ; <strong>un/une/des</strong> ; <strong>du/de la/de l’/des</strong>.</p>`}
           ]},
-          { title:`${I.pronoms} Déterminants & pronoms`, fiches:[
-              { title:'Possessifs / démonstratifs / relatifs',
-                html:`<p><strong>mon/ma/mes</strong>, <strong>ce/cet/cette/ces</strong>, relatifs : <strong>qui/que/où/dont</strong>.</p>`}
+          { title:`Déterminants & pronoms`, fiches:[
+            { title:'Possessifs / démonstratifs / relatifs',
+              pdf: 'assets/pdfs/pronoms-determinants.pdf',
+              html:`<p>mon/ma/mes ; ce/cet/cette/ces ; qui/que/où/dont.</p>`}
           ]},
-          { title:`${I.adjectifs} Adjectifs`, fiches:[
-              { title:'Accords & place',
-                html:`<p>Accord en genre/nombre. Place <em>avant</em> pour certains (beau, grand, petit…).</p>
-                      <div class="ex"><strong>Exercice</strong> : « des robes (bleu) » → …
-                        <details><summary>Correction</summary><div>des robes <strong>bleues</strong>.</div></details></div>`}
+          { title:`Adjectifs`, fiches:[
+            { title:'Accords & place',
+              pdf: 'assets/pdfs/adjectifs-accords-place.pdf',
+              html:`<p>Accord genre/nombre. Parfois avant : beau, grand…</p>`}
           ]},
-          { title:`${I.adverbes} Adverbes`, fiches:[
-              { title:'Formation en -ment',
-                html:`<p>Adjectif fém. + <strong>-ment</strong> : <em>heureux → heureusement</em>.</p>`}
+          { title:`Adverbes`, fiches:[
+            { title:'Formation en -ment',
+              pdf: 'assets/pdfs/adverbes-formation.pdf',
+              html:`<p>heureux → heureusement</p>`}
           ]},
-          { title:`${I.preps} Prépositions`, fiches:[
-              { title:'À / De / En / Dans',
-                html:`<p><strong>En</strong> + pays fém./voyelle ; <strong>au</strong> + pays masc. ; <strong>aux</strong> + pluriel. <em>En France</em>, <em>au Brésil</em>, <em>aux États-Unis</em>.</p>`}
+          { title:`Prépositions`, fiches:[
+            { title:'À / De / En / Dans',
+              pdf: 'assets/pdfs/prepositions-a-de-en-dans.pdf',
+              html:`<p>en France ; au Brésil ; aux États-Unis…</p>`}
           ]},
-          { title:`${I.phrase} Structure de la phrase`, fiches:[
-              { title:'SVO / négation / interrogation',
-                html:`<p>Français : <strong>Sujet–Verbe–Objets</strong>. Négation : <em>ne … pas</em>. Interrogation : <em>Est-ce que…</em></p>`}
+          { title:`Structure de la phrase`, fiches:[
+            { title:'SVO / négation / interrogation',
+              pdf: 'assets/pdfs/structure-phrase.pdf',
+              html:`<p>SVO ; ne… pas ; Est-ce que…</p>`}
           ]}
         ]}
       ]
     },
     {
-      id:'vocabulaire', title:`${I.vocab} Vocabulaire`,
+      id:'vocabulaire', title:`${ICONS.vocabulaire} Vocabulaire`,
       groups: [
-        { title:`${I.confondre} Mots à ne pas confondre`, items:[
+        { title:`Mots à ne pas confondre`, items:[
           { title:'Homophones', fiches:[
-              { title:'a/à ; ou/où ; ces/ses',
-                html:`<p><strong>a/à</strong> : verbe/lieu ; <strong>ou/où</strong> : choix/lieu ; <strong>ces/ses</strong> : démonstratif/possession.</p>
-                      <div class="ex"><strong>Complétez</strong> : « Il <em>__</em> faim », « Tu vas <em>__</em> Paris ? »
-                        <details><summary>Correction</summary><div>a ; à</div></details></div>`}
+            { title:'a/à ; ou/où ; ces/ses',
+              pdf: 'assets/pdfs/homophones.pdf',
+              html:`<p>a/à ; ou/où ; ces/ses.</p>`}
           ]}
         ]},
-        { title:`${I.conj} Conjonctions`, items:[
+        { title:`Conjonctions`, items:[
           { title:'Coordination / subordination', fiches:[
-              { title:'mais, ou, et… / parce que, lorsque…',
-                html:`<p>Reliez deux propositions : <em>Je viens <strong>parce que</strong> tu m’as invité(e).</em></p>`}
+            { title:'mais, ou, et… / parce que, lorsque…',
+              pdf: 'assets/pdfs/conjonctions.pdf',
+              html:`<p>Relier deux propositions : parce que, lorsque…</p>`}
           ]}
         ]},
-        { title:`${I.nombres} Nombres, date et heure`, items:[
+        { title:`Nombres, date et heure`, items:[
           { title:'Chiffres & dates', fiches:[
-              { title:'Heure & formats',
-                html:`<p><strong>Il est</strong> 7h30 ; le <strong>15/09/2025</strong> ; « <em>Nous sommes le</em> … ».</p>`}
+            { title:'Heure & formats',
+              pdf: 'assets/pdfs/heures-dates.pdf',
+              html:`<p>Il est 7h30 ; le 15/09/2025…</p>`}
           ]}
         ]},
-        { title:`${I.pays} Pays et gentilés`, items:[
+        { title:`Pays et gentilés`, items:[
           { title:'Cartes & listes', fiches:[
-              { title:'Nationalités',
-                html:`<p>France → français(e) ; Brésil → brésilien(ne) ; Portugal → portugais(e)…</p>`}
+            { title:'Nationalités',
+              pdf: 'assets/pdfs/nationalites.pdf',
+              html:`<p>France → français(e) ; Brésil → brésilien(ne)…</p>`}
           ]}
         ]},
-        { title:`${I.expressions} Expressions`, items:[
+        { title:`Expressions`, items:[
           { title:'Idiomes courants', fiches:[
-              { title:'Avoir besoin de / être en retard…',
-                html:`<p><em>J’ai besoin de</em> repos ; <em>Je suis en retard</em> ; <em>Ça marche !</em></p>`}
+            { title:'Avoir besoin de / être en retard…',
+              pdf: 'assets/pdfs/expressions-courantes.pdf',
+              html:`<p>J’ai besoin de… ; Je suis en retard ; Ça marche !</p>`}
           ]}
         ]},
-        { title:`${I.thematique} Vocabulaire thématique`, items:[
+        { title:`Vocabulaire thématique`, items:[
           { title:'Vie quotidienne', fiches:[
-              { title:'Alimentation / Santé / Transports',
-                html:`<ul class="small"><li>Alimentation : <em>le marché, cuisiner, goûter</em></li>
-                      <li>Santé : <em>se soigner, une ordonnance</em></li>
-                      <li>Transports : <em>un billet, la correspondance</em></li></ul>
-                      <div class="ex"><strong>Associez</strong> : « gare — », « ordonnance — »
-                        <details><summary>Correction</summary><div>gare — train ; ordonnance — médecin</div></details></div>`}
-          ]}
-        ]},
-        { title:`${I.calendrier} Calendrier de vocabulaire`, items:[
-          { title:'Programme 12 semaines', fiches:[
-              { title:'Exemple S1→S3',
-                html:`<p class="small">S1 : salutations ; S2 : famille ; S3 : ville/transports…</p>`}
+            { title:'Alimentation / Santé / Transports',
+              pdf: 'assets/pdfs/vocab-vie-quotidienne.pdf',
+              html:`<ul class="small"><li>Alimentation : marché, cuisiner…</li><li>Santé : ordonnance…</li><li>Transports : billet, correspondance</li></ul>`}
           ]}
         ]}
       ]
     },
     {
-      id:'comprehension', title:`${I.comprehension} Compréhension écrite et orale`,
+      id:'comprehension', title:`${ICONS.comprehension} Compréhension`,
       groups: [
-        { title:`${I.ecrite} Compréhension écrite`, items:[
+        { title:`Compréhension écrite`, items:[
           { title:'Textes gradués', fiches:[
-              { title:'A1–A2 : Annonce simple',
-                html:`<p><em>Texte :</em> « La médiathèque est ouverte du mardi au samedi. »</p>
-                      <div class="ex"><strong>Question</strong> : Quel jour est-elle fermée ?
-                        <details><summary>Correction</summary><div>Le dimanche et le lundi.</div></details></div>`}
+            { title:'A1–A2 : Annonce simple',
+              pdf: 'assets/pdfs/ce-annonce-a1a2.pdf',
+              html:`<p><em>Texte</em> : « La médiathèque est ouverte du mardi au samedi. »</p>`}
           ]}
         ]},
-        { title:`${I.orale} Compréhension orale`, items:[
+        { title:`Compréhension orale`, items:[
           { title:'Audio & vidéo', fiches:[
-              { title:'Dialogues du quotidien',
-                html:`<p class="small">En classe : écoute guidée « À la boulangerie » (intention, prix, politesse).</p>`}
+            { title:'Dialogues du quotidien',
+              pdf: 'assets/pdfs/co-dialogues.pdf',
+              html:`<p class="small">Écoute guidée « À la boulangerie » (intentions, prix, politesse).</p>`}
           ]}
         ]}
       ]
     },
     {
-      id:'atelier', title:`${I.ecriture} Atelier d’écriture`,
+      id:'atelier', title:`${ICONS.atelier} Atelier d’écriture`,
       groups: [
-        { title:`${I.ponctuation} La ponctuation`, items:[
+        { title:`La ponctuation`, items:[
           { title:'Signes & usages', fiches:[
-              { title:', ; : … ! ?',
-                html:`<p>Le <strong>;</strong> sépare deux phrases proches ; <strong>:</strong> introduit une explication ; <strong>…</strong> effet d’attente.</p>`}
+            { title:', ; : … ! ?',
+              pdf: 'assets/pdfs/ponctuation.pdf',
+              html:`<p>« ; » sépare deux phrases proches ; « : » introduit ; « … » crée une attente.</p>`}
           ]}
         ]},
-        { title:`${I.figures} Figures de style`, items:[
+        { title:`Figures de style`, items:[
           { title:'Fréquentes', fiches:[
-              { title:'Comparaison / métaphore / hyperbole',
-                html:`<p><em>clair comme l’eau</em> (comparaison), <em>océan de papiers</em> (hyperbole).</p>`}
+            { title:'Comparaison / métaphore / hyperbole',
+              pdf: 'assets/pdfs/figures-style.pdf',
+              html:`<p>clair comme l’eau (comparaison), océan de papiers (hyperbole)…</p>`}
           ]}
         ]},
-        { title:`${I.pov} Point de vue narratif`, items:[
+        { title:`Point de vue narratif`, items:[
           { title:'Focalisations', fiches:[
-              { title:'Interne / externe / omniscient',
-                html:`<p>Interne = pensée d’un perso ; Externe = caméra objective ; Omniscient = tout savoir.</p>`}
+            { title:'Interne / externe / omniscient',
+              pdf: 'assets/pdfs/point-de-vue.pdf',
+              html:`<p>Interne = pensées du perso ; Externe = caméra ; Omniscient = tout savoir.</p>`}
           ]}
         ]},
-        { title:`${I.registres} Les registres de langue`, items:[
+        { title:`Registres de langue`, items:[
           { title:'Soutenu / courant / familier', fiches:[
-              { title:'Adapter au contexte',
-                html:`<p><em>Je vous prie de</em> (soutenu) / <em>Merci de</em> (courant) / <em>Tu peux</em> (familier).</p>`}
+            { title:'Adapter au contexte',
+              pdf: 'assets/pdfs/registres-langue.pdf',
+              html:`<p>Je vous prie de / Merci de / Tu peux…</p>`}
           ]}
         ]},
-        { title:`${I.image} Décrire une image`, items:[
+        { title:`Décrire une image`, items:[
           { title:'Méthode pas à pas', fiches:[
-              { title:'Observer → nommer → relier',
-                html:`<p>1) Qui/quoi/où ? 2) Couleurs, positions, actions 3) Hypothèses, interprétation.</p>
-                      <div class="ex"><strong>Exercice</strong> : Décrivez une photo de classe (3 phrases).
-                        <details><summary>Proposition</summary><div>On voit une prof devant le tableau. Les étudiants écrivent. L’ambiance est studieuse.</div></details></div>`}
+            { title:'Observer → nommer → relier',
+              pdf: 'assets/pdfs/decrire-une-image.pdf',
+              html:`<p>1) Qui/quoi/où ? 2) Détails 3) Hypothèses.</p>`}
           ]}
         ]}
       ]
     }
   ];
-  // ===================== FIN DES DONNÉES =====================
 
+  // ---------- Rendu / interactions ----------
   const accRoot   = document.getElementById('acc-container');
   const tocRoot   = document.getElementById('toc-links');
   const searchEl  = document.getElementById('search');
@@ -356,33 +346,34 @@
   tocRoot.innerHTML = DATA.map(s=>`<a href="#${s.id}" data-id="${s.id}">${s.title}</a>`).join('');
 
   function render(filter=''){
-    const q = (filter||'').trim().toLowerCase();
+    const q=(filter||'').trim().toLowerCase();
     accRoot.innerHTML = DATA.map((section, sIdx)=>{
       const groupsHTML = (section.groups||[]).map((g, gIdx)=>{
         const itemsHTML = (g.items||[]).map((it, iIdx)=>{
-          const fiches = (it.fiches||[])
-            .filter(f => !q || f.title.toLowerCase().includes(q) || (f.html && f.html.toLowerCase().includes(q)) || it.title.toLowerCase().includes(q))
-            .map((f, fIdx)=>{
-              const fid = encodeURIComponent(`${sIdx}|${gIdx}|${iIdx}|${fIdx}`);
-              return `<div class="fiche">
-                        <h5><span class="ico">📄</span>${f.title}</h5>
-                        <div class="small">${it.title} — ${g.title}</div>
-                        <div class="actions">
-                          <button class="btn-mini focus-ring" data-open="${fid}" aria-label="Ouvrir ${f.title}">Ouvrir dans le volet →</button>
-                          <a class="btn-mini focus-ring" href="#view=${fid}" aria-label="Lien direct">Lien direct 🔗</a>
-                        </div>
-                      </div>`;
-            }).join('');
-          if (!fiches) return '';
+          const fiches = (it.fiches||[]).map((f, fIdx)=>{
+            const matches = !q || f.title.toLowerCase().includes(q) || (f.html && f.html.toLowerCase().includes(q)) || it.title.toLowerCase().includes(q);
+            if(!matches) return '';
+            const fid = encodeURIComponent(`${sIdx}|${gIdx}|${iIdx}|${fIdx}`);
+            const pdfBtn = f.pdf ? `<a class="btn-mini" href="${f.pdf}" target="_blank" rel="noopener">PDF ⤴︎</a>` : '';
+            return `<div class="fiche">
+                      <h5>${f.title}</h5>
+                      <div class="small">${it.title} — ${g.title}</div>
+                      <div class="actions">
+                        <button class="btn-mini focus-ring" data-open="${fid}" aria-label="Ouvrir ${f.title}">Ouvrir dans le volet →</button>
+                        ${pdfBtn}
+                      </div>
+                    </div>`;
+          }).join('');
+          if(!fiches) return '';
           return `<div class="sub">
-                    <h4><span class="ico">📚</span>${it.title}</h4>
-                    <div class="items">${fiches}</div>
-                  </div>`;
+            <h4>${it.title}</h4>
+            <div class="items">${fiches}</div>
+          </div>`;
         }).join('');
-        if (!itemsHTML.trim()) return '';
+        if(!itemsHTML.trim()) return '';
         return `<div class="card" style="padding:12px">${itemsHTML}</div>`;
       }).join('');
-      if (!groupsHTML.trim()) return '';
+      if(!groupsHTML.trim()) return '';
       return `<div class="acc" id="${section.id}">
         <div class="acc-hd" role="button" aria-expanded="false">
           <h3>${section.title}</h3>
@@ -393,40 +384,24 @@
       </div>`;
     }).join('');
 
-    attachAccHandlers();
-    attachOpenHandlers();
-    restoreHash();
+    attachHandlers();
   }
 
-  function attachAccHandlers(){
+  function attachHandlers(){
+    // Accordions
     accRoot.querySelectorAll('.acc').forEach(acc=>{
       const hd = acc.querySelector('.acc-hd');
       hd.addEventListener('click', ()=>{
         acc.classList.toggle('open');
         const open = acc.classList.contains('open');
         hd.setAttribute('aria-expanded', open?'true':'false');
-        const key='acc-open';
-        const set = new Set(JSON.parse(localStorage.getItem(key) || '[]'));
-        open ? set.add(acc.id) : set.delete(acc.id);
-        localStorage.setItem(key, JSON.stringify([...set]));
-        history.replaceState(null,'',`#${acc.id}`);
       });
     });
-  }
-  function restoreAccOpen(){
-    const key='acc-open';
-    const open = new Set(JSON.parse(localStorage.getItem(key) || '[]'));
-    open.forEach(id=>{
-      const el=document.getElementById(id);
-      if(el){ el.classList.add('open'); el.querySelector('.acc-hd')?.setAttribute('aria-expanded','true'); }
-    });
-  }
-
-  function attachOpenHandlers(){
+    // Open fiche in viewer/drawer
     accRoot.querySelectorAll('[data-open]').forEach(btn=>{
       btn.addEventListener('click', ()=>{
         const fid = btn.getAttribute('data-open');
-        openFicheById(fid, true);
+        openFicheById(fid);
       });
     });
   }
@@ -437,77 +412,37 @@
     const group   = section.groups?.[g]; if(!group) return null;
     const item    = group.items?.[i]; if(!item) return null;
     const fiche   = item.fiches?.[f]; if(!fiche) return null;
-    return {section, group, item, fiche, indexes:{s,g,i,f}};
+    return {section, group, item, fiche};
   }
 
-  function renderFicheHTML({section, group, item, fiche}){
-    return `<div class="meta">
-              <span class="chip">${section.title}</span>
-              <span class="chip">${group.title}</span>
-              <span class="chip">${item.title}</span>
-            </div>
-            <h4>${fiche.title}</h4>
-            <div>${fiche.html}</div>`;
-  }
-
-  function openFicheById(fid, pushHash=false){
-    const p = parseFid(fid);
-    if(!p) return;
-    const html = renderFicheHTML(p);
+  function openFicheById(fid){
+    const p = parseFid(fid); if(!p) return;
+    const html = `
+      <div class="meta">
+        <span class="chip">${p.section.title}</span>
+        <span class="chip">${p.group.title}</span>
+        <span class="chip">${p.item.title}</span>
+      </div>
+      <h4>${p.fiche.title}</h4>
+      <div>${p.fiche.html}</div>`;
     if (window.matchMedia('(min-width: 1280px)').matches) {
-      document.querySelector('.viewer-col').style.display = 'block';
-      viewer.innerHTML = html; viewer.scrollTop = 0;
+      viewerCol.style.display='block';
+      viewer.innerHTML = html; viewer.scrollTop=0;
     } else {
       drawerCt.innerHTML = html;
       drawer.classList.add('open'); drawer.setAttribute('aria-hidden','false');
     }
-    if (pushHash) location.hash = `view=${encodeURIComponent(fid)}`;
   }
 
-  function restoreHash(){
-    const h = location.hash.replace('#','');
-    if(!h) return;
-    if(h.startsWith('view=')){
-      openFicheById(h.slice(5), false);
-    } else {
-      const el = document.getElementById(decodeURIComponent(h));
-      if(el){
-        el.classList.add('open');
-        el.querySelector('.acc-hd')?.setAttribute('aria-expanded','true');
-        setTimeout(()=>el.scrollIntoView({behavior:'smooth', block:'start'}), 50);
-      }
-    }
-    syncTOC();
-  }
-  window.addEventListener('hashchange', restoreHash);
-
-  function highlight(q){
-    accRoot.querySelectorAll('.hit').forEach(el=>el.classList.remove('hit'));
-    if(!q.trim()) return;
-    const t = q.trim().toLowerCase();
-    accRoot.querySelectorAll('.sub h4, .fiche h5, .acc-hd h3').forEach(el=>{
-      if(el.textContent.toLowerCase().includes(t)){
-        el.closest('.acc, .sub, .fiche')?.classList.add('hit');
-        const acc = el.closest('.acc');
-        if(acc){ acc.classList.add('open'); acc.querySelector('.acc-hd')?.setAttribute('aria-expanded','true'); }
-      }
-    });
-  }
-  searchEl.addEventListener('input', e=>{ render(e.target.value); highlight(e.target.value); });
-  searchEl.addEventListener('keydown', e=>{ if(e.key==='Enter'){ e.preventDefault(); highlight(searchEl.value||''); }});
-
-  function syncTOC(){
-    const hash = location.hash.replace('#','');
-    tocRoot.querySelectorAll('a').forEach(a=>{
-      a.classList.toggle('active', a.getAttribute('data-id')===hash);
-    });
-  }
-
+  // Drawer close
   drawer.addEventListener('click', (e)=>{ if(e.target.hasAttribute('data-dismiss')){ drawer.classList.remove('open'); drawer.setAttribute('aria-hidden','true'); } });
   window.addEventListener('keydown', (e)=>{ if(e.key==='Escape'){ drawer.classList.remove('open'); drawer.setAttribute('aria-hidden','true'); } });
 
+  // Search
+  searchEl.addEventListener('input', e=>render(e.target.value));
+
   document.getElementById('year').textContent = new Date().getFullYear();
-  render(''); restoreAccOpen(); syncTOC();
+  render();
 </script>
 <script src="assets/script.js" defer></script>
 </body>
