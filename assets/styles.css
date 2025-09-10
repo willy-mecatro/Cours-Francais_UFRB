@@ -17,3 +17,41 @@
   object-fit: contain;
 }
 
+
+/* Champ stylisé pour le conjugueur */
+.input-wrap {
+  position: relative;
+  display: flex;
+  align-items: center;
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(148,163,184,.25);
+  border-radius: var(--radius);
+  padding: 0 12px;
+  transition: border-color .2s, box-shadow .2s;
+}
+
+.input-wrap:focus-within {
+  border-color: var(--brand);
+  box-shadow: 0 0 0 2px rgba(91,156,255,.3);
+}
+
+.input-wrap .ico {
+  font-size: 18px;
+  margin-right: 8px;
+  color: var(--sub);
+}
+
+.input-wrap input {
+  flex: 1;
+  padding: 12px 6px;
+  border: none;
+  background: transparent;
+  color: var(--text);
+  font-size: 16px;
+  outline: none;
+}
+
+.input-wrap input::placeholder {
+  color: var(--sub);
+  opacity: .8;
+}

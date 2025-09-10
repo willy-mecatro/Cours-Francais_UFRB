@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>Inscription — Cours de Français</title>
+  <meta name="description" content="Inscrivez-vous aux cours de français (UFRB). Parcours en 3 étapes : profil, préférences, récapitulatif.">
+  <link rel="stylesheet" href="assets/styles.css">
+  <style>
+    /* ===== Style spécifique à l’inscription (distinct de contact) ===== */
+    .hero-insc{
+      padding:36px 0; border-bottom:1px solid rgba(148,163,184,.12);
+      background:linear-gradient(90deg, rgba(91,156,255,.22), rgba(168,85,247,.16));
+      color:#fff;
+    }
+    .hero-insc h2{margin:0}
+    .hero-insc .small{color:#e5e7eb}
+
+    .wizard{max-width:920px;margin:22px auto}
+    .cardx{
+      background:linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.03));
+      border:1px solid rgba(148,163,184,.15); border-radius:16px; padding:16px;
+      box-shadow:0 8px 24px rgba(0,0,0,.18);
+    }
+
+    /* Barre de progression */
+    .progress{display:flex;gap:10px;align-items:center;margin-bottom:14px}
+    .pbar{position:relative;height:10px;background:rgba(148,163,184,.22);border-radius:999px;flex:1;overflow:hidden}
+    .pbar .fill{position:absolute;inset:0 0 0 0;width:0;background:linear-gradient(90deg,#5B9CFF,#A855F7);border-radius:999px;transition:width .25s ease}
+    .psteps{display:flex;gap:10px}
+    .pstep{width:28px;height:28px;border-radius:999px;display:flex;align-items:center;justify-content:center;font-weight:800;
+      background:#0f172a;border:2px solid rgba(148,163,184,.35);color:#94a3b8}
+    .pstep.on{border-color:#5B9CFF;color:#fff}
+    .pstep.done{background:linear-gradient(180deg,#143149,#0f172a);border-color:#22c55e;color:#22c55e}
+
+    /* Grilles de formulaire */
+    .grid2{display:grid;gap:12px}
+    @media(min-width:760px){.grid2{grid-template-columns:1fr 1fr}}
+
+    .field{position:relative}
+    .input,.select,.textarea{
+      width:100%;padding:14px 12px;border:1px solid rgba(148,163,184,.28);border-radius:12px;
+      background:rgba(255,255,255,.03);color:#fff;outline:none
+    }
+    .textarea{min-height:110px;resize:vertical}
+    .label{position:absolute;left:12px;top:12px;color:#94a3b8;pointer-events:none;transition:all .15s ease;padding:0 6px}
+    .input:focus,.select:focus,.textarea:focus{outline:2px solid rgba(91,156,255,.5);outline-offset:2px}
+    .input:not(:placeholder-shown)+.label,.textarea:not(:placeholder-shown)+.label,.select.filled+.label,
+    .input:focus+.label,.textarea:focus+.label{top:-8px;font-size:12px;color:#cbd5e1;background:#0f172a}
+
+    /* Choix visuels (boutons cartes) */
+    .choices{display:grid;gap:10px}
+    @media(min-width:760px){.choices{grid-template-columns:repeat(3,1fr)}}
+    .choice{
+      border:1px solid rgba(148,163,184,.25);border-radius:14px;padding:12px;cursor:pointer;
+      background:rgba(255,255,255,.03)
+    }
+    .choice strong{color:#e2e8f0}
+    .choice small{color:#94a3b8}
+    .choice.selected{outline:2px solid #5B9CFF;outline-offset:2px}
+
+    /* Dispos */
+    .dispos{display:grid;gap:10px}
+    @media(min-width:760px){.dispos{grid-template-columns:1.2fr .8fr}}
+    .days{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+    .day{padding:10px;border:1px solid rgba(148,163,184,.25);border-radius:10px;text-align:center;cursor:pointer}
+    .day.on{background:rgba(91,156,255,.12);border-color:#5B9CFF}
+
+    .slots{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+    .slot{padding:10px;border:1px dashed rgba(148,163,184,.3);border-radius:10px;text-align:center;cursor:pointer}
+    .slot.on{background:rgba(34,197,94,.12);border-color:#22c55e}
+
+    /* Boutons actions */
+    .actions{display:flex;gap:10px;flex-wrap:wrap;justify-content:flex-end;margin-top:12px}
+    .btn-ghost{border:1px solid rgba(148,163,184,.28);background:transparent;color:#e2e8f0;border-radius:10px;padding:10px 14px;font-weight:700}
+    .btn-ghost:hover{filter:brightness(1.08)}
+    .btn-primary{background:#0b3c67;color:#fff}
+
+    /* Récap */
+    .recap{display:grid;gap:10px}
+    .recap .row{display:flex;justify-content:space-between;border:1px solid rgba(148,163,184,.2);border-radius:12px;padding:10px}
+    .recap .key{color:#94a3b8}
+    .recap .val{color:#e2e8f0;font-weight:700}
+
+    .note{font-size:12px;color:#94a3b8}
+    .gdpr{font-size:12px;color:#94a3b8;border-left:3px solid #059669;background:#0b1a15;padding:10px;border-radius:10px}
+  </style>
+</head>
+<body>
+<header>
+  <nav class="container">
+    <div class="brand">
+      <svg class="flag" viewBox="0 0 3 2" aria-hidden="true"><rect width="1" height="2" x="0" fill="#002395"/><rect width="1" height="2" x="1" fill="#ffffff"/><rect width="1" height="2" x="2" fill="#ED2939"/></svg>
+      <h1>Cours de Français — Domingas Silva</h1>
+    </div>
+    <button class="burger" aria-label="Ouvrir le menu" aria-expanded="false" aria-controls="navlinks">☰</button>
+    <div class="navlinks" id="navlinks">
+      <a href="index.html">Accueil</a>
+      <a href="apropos.html">À propos</a>
+      <a href="cours.html">Cours</a>
+      <a href="ressources.html">Ressources</a>
+      <a href="test-niveau.html">Test de niveau</a>
+      <a class="active" href="inscription.html">Inscription</a>
+      <a class="btn btn-primary" href="contact.html">Contact</a>
+    </div>
+  </nav>
+</header>
+
+<main class="hero-insc">
+  <div class="container">
+    <h2>Inscription — démarrez en 3 étapes</h2>
+    <p class="small">Profil → Préférences → Récapitulatif · <strong>Essai gratuit 15 min</strong> inclus.</p>
+  </div>
+</main>
+
+<section class="container wizard">
+  <!-- Progress Header -->
+  <div class="progress">
+    <div class="psteps">
+      <div class="pstep on"   data-stepdot="1">1</div>
+      <div class="pstep"      data-stepdot="2">2</div>
+      <div class="pstep"      data-stepdot="3">3</div>
+    </div>
+    <div class="pbar"><div class="fill" id="pfill" style="width:33%"></div></div>
+  </div>
+
+  <!-- STEP 1: Profil -->
+  <form id="inscForm" class="cardx" onsubmit="return false;">
+    <div data-step="1">
+      <h3 style="margin:0 0 6px">1) Vos informations</h3>
+      <p class="small">Ces infos nous permettent de vous recontacter et de préparer votre essai gratuit.</p>
+      <div class="grid2" style="margin-top:10px">
+        <div class="field">
+          <input class="input" id="name" name="name" placeholder=" " required>
+          <label class="label" for="name">Nom complet</label>
+        </div>
+        <div class="field">
+          <input class="input" id="email" type="email" name="email" placeholder=" " required>
+          <label class="label" for="email">Email</label>
+        </div>
+      </div>
+      <div class="grid2" style="margin-top:10px">
+        <div class="field">
+          <input class="input" id="phone" name="phone" placeholder=" ">
+          <label class="label" for="phone">Téléphone (WhatsApp)</label>
+        </div>
+        <div class="field">
+          <select class="select" id="level" name="level" onchange="this.classList.add('filled')" required>
+            <option value="" disabled selected>Choisir…</option>
+            <option>A1 — Débutant</option>
+            <option>A2 — Élémentaire</option>
+            <option>B1 — Intermédiaire</option>
+            <option>B2 — Avancé</option>
+            <option>Je ne sais pas</option>
+          </select>
+          <label class="label" for="level">Niveau estimé</label>
+        </div>
+      </div>
+      <div class="actions">
+        <button class="btn btn-primary" type="button" onclick="nextStep()">Continuer</button>
+      </div>
+    </div>
+
+    <!-- STEP 2: Préférences -->
+    <div data-step="2" style="display:none">
+      <h3 style="margin:0 0 6px">2) Vos préférences</h3>
+      <div class="choices" style="margin-top:8px">
+        <div class="choice" data-choice="format" data-value="Individuel (présentiel)"><strong>Individuel</strong><br><small>Présentiel UFRB</small></div>
+        <div class="choice" data-choice="format" data-value="Groupe (présentiel)"><strong>Groupe</strong><br><small>Présentiel UFRB</small></div>
+        <div class="choice" data-choice="format" data-value="En ligne (Indiv. ou Groupe)"><strong>En ligne</strong><br><small>Zoom / Meet</small></div>
+      </div>
+
+      <div class="dispos" style="margin-top:12px">
+        <div class="cardx" style="padding:12px">
+          <strong style="color:#e2e8f0">Jours possibles</strong>
+          <div class="days" style="margin-top:8px">
+            <div class="day" data-day="Lundi">Lun</div>
+            <div class="day" data-day="Mardi">Mar</div>
+            <div class="day" data-day="Mercredi">Mer</div>
+            <div class="day" data-day="Jeudi">Jeu</div>
+            <div class="day" data-day="Vendredi">Ven</div>
+            <div class="day" data-day="Samedi">Sam</div>
+          </div>
+        </div>
+        <div class="cardx" style="padding:12px">
+          <strong style="color:#e2e8f0">Créneau horaire</strong>
+          <div class="slots" style="margin-top:8px">
+            <div class="slot" data-slot="Matin (08–12h)">Matin</div>
+            <div class="slot" data-slot="Après-midi (12–18h)">Après-midi</div>
+            <div class="slot" data-slot="Soir (18–21h)">Soir</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="field" style="margin-top:12px">
+        <textarea class="textarea" id="goals" name="goals" placeholder=" "></textarea>
+        <label class="label" for="goals">Vos objectifs (examens, pro, voyage…)</label>
+      </div>
+
+      <div class="actions">
+        <button class="btn-ghost" type="button" onclick="prevStep()">Retour</button>
+        <button class="btn btn-primary" type="button" onclick="nextStep()">Continuer</button>
+      </div>
+    </div>
+
+    <!-- STEP 3: Récap + envoi -->
+    <div data-step="3" style="display:none">
+      <h3 style="margin:0 0 6px">3) Récapitulatif</h3>
+      <div class="recap" id="recap" style="margin-top:10px"></div>
+
+      <div class="gdpr" style="margin-top:10px">
+        <strong>Confidentialité :</strong> vos données ne sont utilisées que pour traiter votre inscription (aucun partage commercial).
+      </div>
+
+      <div class="actions">
+        <button class="btn-ghost" type="button" onclick="prevStep()">Modifier</button>
+        <button class="btn btn-primary" type="button" onclick="submitMail()">Envoyer ma demande</button>
+      </div>
+      <p class="note" style="margin-top:8px">L’envoi ouvre votre client mail avec un message pré-rempli.</p>
+    </div>
+  </form>
+</section>
+
+<section class="container" style="max-width:920px">
+  <div class="cardx">
+    <h4 style="margin:0 0 8px">Ce que vous obtenez</h4>
+    <ul class="small" style="color:#cbd5e1; margin:0 0 6px 18px">
+      <li>Un <strong>test de niveau</strong> offert si nécessaire</li>
+      <li>Un <strong>plan personnalisé</strong> A1 → B2 avec jalons</li>
+      <li><strong>Matériel</strong> (PDF/fiche) fourni à chaque séance</li>
+      <li>Un <strong>essai gratuit de 15 min</strong> pour valider le format</li>
+    </ul>
+  </div>
+</section>
+
+<section class="cta">
+  <div class="container inner">
+    <div>
+      <h3 style="margin:6px 0;color:#fff">Une question rapide ?</h3>
+      <div class="small">Préférez-vous WhatsApp ou e-mail ? Je réponds vite.</div>
+    </div>
+    <div>
+      <a class="btn btn-primary" href="https://wa.me/557599950452" target="_blank" rel="noopener">WhatsApp</a>
+      <a class="btn btn-outline" href="mailto:domingas@aluno.ufrb.edu.br">E-mail</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="container footer-inner">
+    <div class="small">© <span id="year"></span> Domingas Silva — Cours de Français · Inscription.</div>
+  </div>
+</footer>
+
+<script>
+  // ===== Wizard logic =====
+  let step = 1;
+  const total = 3;
+  const form = document.getElementById('inscForm');
+  const pfill = document.getElementById('pfill');
+
+  function showStep(n){
+    step = Math.min(Math.max(n,1), total);
+    form.querySelectorAll('[data-step]').forEach(s => s.style.display = (parseInt(s.getAttribute('data-step'))===step)?'block':'none');
+    // progress
+    const pct = (step/total)*100;
+    pfill.style.width = pct+'%';
+    // dots
+    document.querySelectorAll('[data-stepdot]').forEach(d=>{
+      const i = parseInt(d.getAttribute('data-stepdot'));
+      d.classList.toggle('on', i===step);
+      d.classList.toggle('done', i<step);
+    });
+    if(step===3) buildRecap();
+  }
+  function nextStep(){ showStep(step+1); }
+  function prevStep(){ showStep(step-1); }
+
+  // Choices (format)
+  const state = { format:'', days:[], slot:'' };
+
+  document.querySelectorAll('.choice[data-choice="format"]').forEach(el=>{
+    el.addEventListener('click', ()=>{
+      document.querySelectorAll('.choice[data-choice="format"]').forEach(c=>c.classList.remove('selected'));
+      el.classList.add('selected');
+      state.format = el.getAttribute('data-value');
+    });
+  });
+
+  // Days
+  document.querySelectorAll('.day').forEach(d=>{
+    d.addEventListener('click', ()=>{
+      const v = d.getAttribute('data-day');
+      d.classList.toggle('on');
+      if(d.classList.contains('on')){
+        if(!state.days.includes(v)) state.days.push(v);
+      }else{
+        state.days = state.days.filter(x=>x!==v);
+      }
+    });
+  });
+
+  // Slots (one)
+  document.querySelectorAll('.slot').forEach(s=>{
+    s.addEventListener('click', ()=>{
+      document.querySelectorAll('.slot').forEach(x=>x.classList.remove('on'));
+      s.classList.add('on');
+      state.slot = s.getAttribute('data-slot');
+    });
+  });
+
+  function buildRecap(){
+    const name  = (document.getElementById('name').value||'').trim();
+    const email = (document.getElementById('email').value||'').trim();
+    const phone = (document.getElementById('phone').value||'').trim();
+    const level = (document.getElementById('level').value||'').trim();
+    const goals = (document.getElementById('goals').value||'').trim();
+
+    const rec = document.getElementById('recap');
+    rec.innerHTML = `
+      <div class="row"><span class="key">Nom</span><span class="val">${name||'—'}</span></div>
+      <div class="row"><span class="key">Email</span><span class="val">${email||'—'}</span></div>
+      <div class="row"><span class="key">Téléphone</span><span class="val">${phone||'—'}</span></div>
+      <div class="row"><span class="key">Niveau</span><span class="val">${level||'—'}</span></div>
+      <div class="row"><span class="key">Format</span><span class="val">${state.format||'—'}</span></div>
+      <div class="row"><span class="key">Jours</span><span class="val">${state.days.join(', ')||'—'}</span></div>
+      <div class="row"><span class="key">Créneau</span><span class="val">${state.slot||'—'}</span></div>
+      <div class="row"><span class="key">Objectifs</span><span class="val">${goals?goals.replace(/\n/g,' · '):'—'}</span></div>
+    `;
+  }
+
+  function submitMail(){
+    // validation minimale
+    const name  = (document.getElementById('name').value||'').trim();
+    const email = (document.getElementById('email').value||'').trim();
+    const level = (document.getElementById('level').value||'').trim();
+    if(!name || !email || !level){ alert('Merci de compléter au moins Nom, Email et Niveau.'); showStep(1); return; }
+
+    const phone = (document.getElementById('phone').value||'').trim();
+    const goals = (document.getElementById('goals').value||'').trim();
+
+    const subject = encodeURIComponent(`Inscription — ${name} (${level})`);
+    const body = encodeURIComponent(
+`Nom: ${name}
+Email: ${email}
+Téléphone: ${phone || '—'}
+Niveau estimé: ${level}
+Format préféré: ${state.format || '—'}
+Jours possibles: ${state.days.join(', ') || '—'}
+Créneau: ${state.slot || '—'}
+
+Objectifs / message:
+${goals || '—'}
+
+— formulaire d’inscription (site)`
+    );
+    window.location.href = `mailto:domingas@aluno.ufrb.edu.br?subject=${subject}&body=${body}`;
+  }
+
+  // Selects style
+  document.querySelectorAll('select.select').forEach(s=>{
+    s.addEventListener('change', ()=>s.classList.add('filled'));
+  });
+
+  // Init
+  showStep(1);
+  document.getElementById('year').textContent = new Date().getFullYear();
+</script>
+
+<script src="assets/script.js" defer></script>
+</body>
+</html>

@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Conjugaison — Cours de Français</title>
+  <meta name="description" content="">
+  <link rel="stylesheet" href="assets/styles.css">
+  <style>
+    /* Assure l’affichage de toutes les cartes */
+    .results { display:block; max-height:none; overflow:visible; }
+    .results .card { margin-bottom:16px; }
+    table { width:100%; border-collapse:collapse }
+    td { padding:8px 10px; border-bottom:1px solid rgba(148,163,184,.15) }
+  </style>
+</head>
+<body>
+<header>
+  <nav class="container">
+    <div class="brand">
+      <svg class="flag" viewBox="0 0 3 2" aria-hidden="true"><rect width="1" height="2" x="0" fill="#002395"/><rect width="1" height="2" x="1" fill="#ffffff"/><rect width="1" height="2" x="2" fill="#ED2939"/></svg>
+      <h1>Cours de Français — Domingas Silva</h1>
+    </div>
+    <button class="burger" aria-label="Ouvrir le menu" aria-expanded="false" aria-controls="navlinks">☰</button>
+    <div class="navlinks" id="navlinks">
+      <a class="" href="index.html">Accueil</a>
+      <a class="" href="apropos.html">À propos</a>
+      <a class="" href="cours.html">Cours</a>
+      <a class="" href="ressources.html">Ressources</a>
+      <a class="" href="test-niveau.html">Test de niveau</a>
+      <a class="" href="contact.html">Contact</a>
+      <a class="btn btn-primary" href="conjuguaison.html">Conjugueur</a>
+    </div>
+  </nav>
+</header>
+
+<section class="container" style="padding-top:34px">
+  <h3>Conjugaison des verbes</h3>
+  <p class="small" style="margin-top:6px">
+    Tape un verbe à l’infinitif (ex. <em>parler</em>, <em>finir</em>, <em>prendre</em>, <em>s’habiller</em>), coche un ou plusieurs temps puis clique sur « Conjuguer ».
+  </p>
+</section>
+
+<section class="container" style="padding-top:10px">
+  <div class="card">
+    <div class="input-wrap">
+        <span class="ico">🔍</span>
+        <input id="verbInput" type="text" placeholder="Entrer un verbe (infinitif)">
+    </div>
+
+    <div class="grid grid-3" style="gap:12px">
+      <label><input type="checkbox" name="tense" value="PRESENT" checked> Présent</label>
+      <label><input type="checkbox" name="tense" value="IMPARFAIT"> Imparfait</label>
+      <label><input type="checkbox" name="tense" value="PASSE_COMPOSE"> Passé composé</label>
+      <label><input type="checkbox" name="tense" value="PLUS_QUE_PARFAIT"> Plus-que-parfait</label>
+      <label><input type="checkbox" name="tense" value="FUTUR"> Futur simple</label>
+      <label><input type="checkbox" name="tense" value="FUTUR_ANTERIEUR"> Futur antérieur</label>
+      <label><input type="checkbox" name="tense" value="CONDITIONNEL_PRESENT"> Conditionnel présent</label>
+      <label><input type="checkbox" name="tense" value="CONDITIONNEL_PASSE_1"> Conditionnel passé</label>
+      <label><input type="checkbox" name="tense" value="SUBJONCTIF_PRESENT"> Subjonctif présent</label>
+      <label><input type="checkbox" name="tense" value="SUBJONCTIF_PASSE"> Subjonctif passé</label>
+      <label><input type="checkbox" name="tense" value="IMPERATIF_PRESENT"> Impératif présent</label>
+      <label><input type="checkbox" name="tense" value="INFINITIF_PASSE"> Infinitif passé</label>
+    </div>
+
+    <div style="margin-top:14px; display:flex; gap:8px; justify-content:space-between; flex-wrap:wrap">
+      <div class="small" style="color:#666">
+        Astuce : si aucun temps n’est coché, tous les temps seront affichés.
+      </div>
+      <div style="display:flex; gap:8px">
+        <button id="checkAll" class="btn">Tout cocher</button>
+        <button id="uncheckAll" class="btn">Tout décocher</button>
+        <button id="goBtn" class="btn btn-primary">Conjuguer</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="container" style="padding-top:14px">
+  <div class="card" id="agreeCard" style="display:flex; gap:12px; align-items:center; flex-wrap:wrap">
+    <strong class="small">Accord du participe passé</strong>
+    <label><input type="radio" name="gender" value="M" checked> Masculin</label>
+    <label><input type="radio" name="gender" value="F"> Féminin</label>
+    <span style="width:12px"></span>
+    <label><input type="radio" name="number" value="S" checked> Singulier</label>
+    <label><input type="radio" name="number" value="P"> Pluriel</label>
+  </div>
+</section>
+
+<section class="container" style="padding-top:12px">
+  <div id="results" class="results"></div>
+</section>
+
+<footer>
+  <div class="container footer-inner">
+    <div class="small">© <span id="year"></span> Domingas Silva — Cours de Français · Design modernisé.</div>
+  </div>
+</footer>
+
+<script src="assets/script.js" defer></script>
+<script>
+  document.getElementById('year').textContent = new Date().getFullYear();
+</script>
+
+<!-- JS principal -->
+<script type="module">
+  import * as FrenchVerbs from 'https://cdn.jsdelivr.net/npm/french-verbs@5.4.0/+esm';
+  const lefffUrl = 'https://cdn.jsdelivr.net/npm/french-verbs-lefff@3.4.0/dist/conjugations.json';
+  const lefff = await fetch(lefffUrl).then(r => r.json());
+
+  const PRONOMS = ['je','tu','il/elle','nous','vous','ils/elles'];
+  const PERSON_INDEX = [0,1,2,3,4,5];
+
+  const TENSE_LABELS = {
+    PRESENT: 'Présent',
+    IMPARFAIT: 'Imparfait',
+    PASSE_COMPOSE: 'Passé composé',
+    PLUS_QUE_PARFAIT: 'Plus-que-parfait',
+    FUTUR: 'Futur simple',
+    FUTUR_ANTERIEUR: 'Futur antérieur',
+    CONDITIONNEL_PRESENT: 'Conditionnel présent',
+    CONDITIONNEL_PASSE_1: 'Conditionnel passé',
+    SUBJONCTIF_PRESENT: 'Subjonctif présent',
+    SUBJONCTIF_PASSE: 'Subjonctif passé',
+    IMPERATIF_PRESENT: 'Impératif présent',
+    INFINITIF_PASSE: 'Infinitif passé'
+  };
+  const ALL_TENSES = Object.keys(TENSE_LABELS);
+
+  const resultsEl = document.getElementById('results');
+  const inputEl = document.getElementById('verbInput');
+  const btnEl = document.getElementById('goBtn');
+  const checkAllBtn = document.getElementById('checkAll');
+  const uncheckAllBtn = document.getElementById('uncheckAll');
+
+  function card(inner){ return `<div class="card">${inner}</div>`; }
+
+  // Élision + ne pas doubler les clitiques pronominaux
+  function withPronoun(pronoun, form) {
+    const f = (form || "").trim();
+    if (/^(m[’']|me |t[’']|te |s[’']|se )/i.test(f)) return f;
+    if (pronoun === 'je' && /^[aeiouhâàäéèêëîïôöùûüœy]/i.test(f)) return "j’" + f;
+    return pronoun + " " + f;
+  }
+
+  function getSelectedTenses(){
+    const checked = Array.from(document.querySelectorAll('input[name="tense"]:checked')).map(el => el.value);
+    return checked.length ? checked : ALL_TENSES;
+  }
+
+  // Rendu des tableaux par temps (gestion spéciale impératif / infinitif)
+  function tableFor(verb, tense, opts = {}) {
+    try {
+      // IMPÉRATIF PRÉSENT : personnes TU, NOUS, VOUS ; pas de pronom
+      if (tense === 'IMPERATIF_PRESENT') {
+        const map = [
+          { label: '(tu)', person: 1 },
+          { label: '(nous)', person: 3 },
+          { label: '(vous)', person: 4 },
+        ];
+        const rows = map.map(({label, person}) => {
+          const raw = FrenchVerbs.getConjugation(lefff, verb, tense, person, opts) || '—';
+          return `<tr><td>${label}</td><td>${raw}</td></tr>`;
+        }).join('');
+        return card(`
+          <h4 style="margin:0 0 8px">${verb} — ${TENSE_LABELS[tense]}</h4>
+          <table><tbody>${rows}</tbody></table>
+        `);
+      }
+
+      // INFINITIF PASSÉ : forme unique
+      if (tense === 'INFINITIF_PASSE') {
+        // certains moteurs ignorent la personne → on n’en passe pas
+        const raw = FrenchVerbs.getConjugation(lefff, verb, tense, undefined, opts) || '—';
+        const row = `<tr><td colspan="2">${raw}</td></tr>`;
+        return card(`
+          <h4 style="margin:0 0 8px">${verb} — ${TENSE_LABELS[tense]}</h4>
+          <table><tbody>${row}</tbody></table>
+        `);
+      }
+
+      // Temps personnels “classiques”
+      const rows = PERSON_INDEX.map((i) => {
+        const raw = FrenchVerbs.getConjugation(lefff, verb, tense, i, opts) || '—';
+        const line = withPronoun(PRONOMS[i], raw);
+        return `<tr><td colspan="2">${line}</td></tr>`;
+      }).join('');
+
+      return card(`
+        <h4 style="margin:0 0 8px">${verb} — ${TENSE_LABELS[tense]}</h4>
+        <table><tbody>${rows}</tbody></table>
+      `);
+    } catch (e) {
+      console.error('Erreur conjugaison', tense, e);
+      return card(`<p>Impossible d’afficher <strong>${TENSE_LABELS[tense] || tense}</strong> pour « ${verb} ».</p>`);
+    }
+  }
+
+  function render(){
+    const v = (inputEl.value || '').trim().toLowerCase();
+    if (!v) { resultsEl.innerHTML = card('<p>Entre un verbe à l’infinitif pour commencer.</p>'); return; }
+
+    const gender = (document.querySelector('input[name="gender"]:checked') || {}).value || 'M';
+    const number = (document.querySelector('input[name="number"]:checked') || {}).value || 'S';
+    const opts = { agreeGender: gender, agreeNumber: number };
+
+    const tenses = getSelectedTenses();
+    let html = '';
+    tenses.forEach(t => { html += tableFor(v, t, opts); });
+    resultsEl.innerHTML = html;
+  }
+
+  // Actions
+  btnEl.addEventListener('click', render);
+  inputEl.addEventListener('keydown', e => { if (e.key === 'Enter') render(); });
+  document.querySelectorAll('input[name="gender"], input[name="number"]').forEach(el => el.addEventListener('change', render));
+  checkAllBtn.addEventListener('click', () => {
+    document.querySelectorAll('input[name="tense"]').forEach(el => el.checked = true);
+  });
+  uncheckAllBtn.addEventListener('click', () => {
+    document.querySelectorAll('input[name="tense"]').forEach(el => el.checked = false);
+  });
+
+  // Démo au chargement
+  inputEl.value = 'parler';
+  render();
+</script>
+</body>
+</html>
